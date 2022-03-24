@@ -1,13 +1,3 @@
-/* global Chart */
-
-/**
- * --------------------------------------------------------------------------
- * CoreUI Boostrap Admin Template (v4.1.1): main.js
- * Licensed under MIT (https://coreui.io/license)
- * --------------------------------------------------------------------------
- */
-
-// random Numbers
 const random = () => Math.round(Math.random() * 100)
 
 // eslint-disable-next-line no-unused-vars
