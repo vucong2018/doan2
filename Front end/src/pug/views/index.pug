@@ -1,0 +1,322 @@
+doctype html
+head
+  base(href='./')
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible' content='IE=edge')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
+  meta(name='description' content='CoreUI - Open Source Bootstrap Admin Template')
+  meta(name='author' content='Łukasz Holeczek')
+  meta(name='keyword' content='Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard')
+  title Green House Dashboard
+  link(rel='apple-touch-icon' sizes='57x57' href='assets/favicon/apple-icon-57x57.png')
+  link(rel='apple-touch-icon' sizes='60x60' href='assets/favicon/apple-icon-60x60.png')
+  link(rel='apple-touch-icon' sizes='72x72' href='assets/favicon/apple-icon-72x72.png')
+  link(rel='apple-touch-icon' sizes='76x76' href='assets/favicon/apple-icon-76x76.png')
+  link(rel='apple-touch-icon' sizes='114x114' href='assets/favicon/apple-icon-114x114.png')
+  link(rel='apple-touch-icon' sizes='120x120' href='assets/favicon/apple-icon-120x120.png')
+  link(rel='apple-touch-icon' sizes='144x144' href='assets/favicon/apple-icon-144x144.png')
+  link(rel='apple-touch-icon' sizes='152x152' href='assets/favicon/apple-icon-152x152.png')
+  link(rel='apple-touch-icon' sizes='180x180' href='assets/favicon/apple-icon-180x180.png')
+  link(rel='stylesheet' href='https://unpkg.com/@coreui/icons/css/all.min.css')
+  link(rel='manifest' href='assets/favicon/manifest.json')
+  meta(name='msapplication-TileColor' content='#ffffff')
+  meta(name='msapplication-TileImage' content='assets/favicon/ms-icon-144x144.png')
+  meta(name='theme-color' content='#ffffff')
+  link(rel='stylesheet' href='node_modules/simplebar/dist/simplebar.css')
+  link(rel='stylesheet' href='css/vendors/simplebar.css')
+  link(href='css/style.css' rel='stylesheet')
+  link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css')
+  link(href='css/examples.css' rel='stylesheet')
+  script(async='' src='https://www.googletagmanager.com/gtag/js?id=UA-118965717-3')
+  script.
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    // Shared ID
+    gtag('config', 'UA-118965717-3');
+    // Bootstrap ID
+    gtag('config', 'UA-118965717-5');
+  link(href='node_modules/@coreui/chartjs/dist/css/coreui-chartjs.css' rel='stylesheet')
+#sidebar.sidebar.sidebar-dark.sidebar-fixed
+  ul.sidebar-nav(data-coreui='navigation' data-simplebar='')
+    li.nav-item
+      a.nav-link(href='index.html')
+        svg.nav-icon
+          use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-speedometer')
+        |  Dashboard
+        span.badge.badge-sm.bg-info.ms-auto NEW
+  button.sidebar-toggler(type='button' data-coreui-toggle='unfoldable')
+.wrapper.d-flex.flex-column.min-vh-100.bg-light
+  header.header.header-sticky.mb-4
+    .container-fluid
+      button.header-toggler.px-md-0.me-md-3(type='button' onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()")
+        svg.icon.icon-lg
+          use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-menu')
+      a.header-brand.d-md-none(href='#')
+        svg(width='118' height='46' alt='CoreUI Logo')
+          use(xlink:href='assets/brand/coreui.svg#full')
+      ul.header-nav.d-none.d-md-flex
+        li.nav-item
+          a.nav-link(href='#') Dashboard
+        li.nav-item
+          a.nav-link(href='#') Users
+        li.nav-item
+          a.nav-link(href='#') Settings
+      ul.header-nav.ms-auto
+        li.nav-item
+          a.nav-link(href='#')
+            svg.icon.icon-lg
+              use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-bell')
+        li.nav-item
+          a.nav-link(href='#')
+            svg.icon.icon-lg
+              use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-list-rich')
+        li.nav-item
+          a.nav-link(href='#')
+            svg.icon.icon-lg
+              use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-envelope-open')
+      ul.header-nav.ms-3
+        li.nav-item.dropdown
+          a.nav-link.py-0(data-coreui-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false')
+            .avatar.avatar-md
+              img.avatar-img(src='assets/img/avatars/ava.jpg' alt='user@email.com')
+          .dropdown-menu.dropdown-menu-end.pt-0
+            .dropdown-header.bg-light.py-2
+              .fw-semibold Account
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-bell')
+              |  Updates
+              span.badge.badge-sm.bg-info.ms-2 42
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-envelope-open')
+              |  Messages
+              span.badge.badge-sm.bg-success.ms-2 42
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-task')
+              |  Tasks
+              span.badge.badge-sm.bg-danger.ms-2 42
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-comment-square')
+              |  Comments
+              span.badge.badge-sm.bg-warning.ms-2 42
+            .dropdown-header.bg-light.py-2
+              .fw-semibold Settings
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-user')
+              |  Profile
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-settings')
+              |  Settings
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-credit-card')
+              |  Payments
+              span.badge.badge-sm.bg-secondary.ms-2 42
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-file')
+              |  Projects
+              span.badge.badge-sm.bg-primary.ms-2 42
+            .dropdown-divider
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-lock-locked')
+              |  Lock Account
+            a.dropdown-item(href='#')
+              svg.icon.me-2
+                use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-account-logout')
+              |  Logout
+    .header-divider
+    .container-fluid
+      nav(aria-label='breadcrumb')
+        ol.breadcrumb.my-0.ms-2
+          li.breadcrumb-item
+            // if breadcrumb is single
+            span Home
+          li.breadcrumb-item.active
+            span Dashboard
+  .body.flex-grow-1.px-3
+    .container-lg
+      .row
+        .col-sm-6.col-lg-3
+          .card.mb-4.text-white.bg-primary
+            .card-body.pb-0.d-flex.justify-content-between.align-items-start
+              div
+                .fs-4.fw-semibold
+                  | Good 
+                  span.fs-6.fw-normal
+                div Overall
+              .dropdown
+                button.btn.btn-transparent.text-white.p-0(type='button' data-coreui-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  svg.icon
+                    use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-options')
+                .dropdown-menu.dropdown-menu-end
+                  a.dropdown-item(href='#') Action
+                  a.dropdown-item(href='#') Another action
+                  a.dropdown-item(href='#') Something else here
+            .c-chart-wrapper.mt-3.mx-3(style='height:70px;')
+              canvas#card-chart1.chart(height='70')
+        // /.col
+        .col-sm-6.col-lg-3
+          .card.mb-4.text-white.bg-info
+            .card-body.pb-0.d-flex.justify-content-between.align-items-start
+              div
+                .fs-4.fw-semibold
+                  | 73,8% 
+                  span.fs-6.fw-normal
+                    | (0,2%
+                    svg.icon
+                      use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-arrow-top')
+                    | )
+                div Moisture
+              .dropdown
+                button.btn.btn-transparent.text-white.p-0(type='button' data-coreui-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  svg.icon
+                    use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-options')
+                .dropdown-menu.dropdown-menu-end
+                  a.dropdown-item(href='#') Action
+                  a.dropdown-item(href='#') Another action
+                  a.dropdown-item(href='#') Something else here
+            .c-chart-wrapper.mt-3.mx-3(style='height:70px;')
+              canvas#card-chart2.chart(height='70')
+        // /.col
+        .col-sm-6.col-lg-3
+          .card.mb-4.text-white.bg-warning
+            .card-body.pb-0.d-flex.justify-content-between.align-items-start
+              div
+                .fs-4.fw-semibold
+                  | 12W 
+                  span.fs-6.fw-normal
+                    | (0,05%
+                    svg.icon
+                      use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-arrow-top')
+                    | )
+                div Light
+              .dropdown
+                button.btn.btn-transparent.text-white.p-0(type='button' data-coreui-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  svg.icon
+                    use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-options')
+                .dropdown-menu.dropdown-menu-end
+                  a.dropdown-item(href='#') Action
+                  a.dropdown-item(href='#') Another action
+                  a.dropdown-item(href='#') Something else here
+            .c-chart-wrapper.mt-3(style='height:70px;')
+              canvas#card-chart3.chart(height='70')
+        // /.col
+        .col-sm-6.col-lg-3
+          .card.mb-4.text-white.bg-danger
+            .card-body.pb-0.d-flex.justify-content-between.align-items-start
+              div
+                .fs-4.fw-semibold
+                  | 20&amp;#8451 
+                  span.fs-6.fw-normal
+                    | (-0,4%
+                    svg.icon
+                      use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-arrow-bottom')
+                    | )
+                div Temperature
+              .dropdown
+                button.btn.btn-transparent.text-white.p-0(type='button' data-coreui-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  svg.icon
+                    use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-options')
+                .dropdown-menu.dropdown-menu-end
+                  a.dropdown-item(href='#') Action
+                  a.dropdown-item(href='#') Another action
+                  a.dropdown-item(href='#') Something else here
+            .c-chart-wrapper.mt-3.mx-3(style='height:70px;')
+              canvas#card-chart4.chart(height='70')
+        // /.col
+      // /.row
+      .card.mb-4
+        .card-body
+          .d-flex.justify-content-between
+            div
+              h4.card-title.mb-0 Green House
+              .small.text-medium-emphasis January - March 2022
+            .btn-toolbar.d-none.d-md-block(role='toolbar' aria-label='Toolbar with buttons')
+              .btn-group.btn-group-toggle.mx-3(data-coreui-toggle='buttons')
+                input#option1.btn-check(type='radio' name='options' autocomplete='off')
+                label.btn.btn-outline-secondary  Day
+                input#option2.btn-check(type='radio' name='options' autocomplete='off' checked='')
+                label.btn.btn-outline-secondary.active  Month
+                input#option3.btn-check(type='radio' name='options' autocomplete='off')
+                label.btn.btn-outline-secondary  Year
+              button.btn.btn-primary(type='button')
+                svg.icon
+                  use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-cloud-download')
+          .c-chart-wrapper(style='height:300px;margin-top:40px;')
+            canvas#main-chart.chart(height='300')
+        .card-footer
+          .row.row-cols-1.row-cols-md-3.text-center
+            .col.mb-sm-2.mb-0
+              .text-medium-emphasis Light
+              .fw-semibold 12W (0,05%)
+              .progress.progress-thin.mt-2
+                .progress-bar.bg-success(role='progressbar' style='width: 40%' aria-valuenow='40' aria-valuemin='0' aria-valuemax='100')
+            .col.mb-sm-2.mb-0
+              .text-medium-emphasis Moisture
+              .fw-semibold 73,8% (0,2%)
+              .progress.progress-thin.mt-2
+                .progress-bar.bg-info(role='progressbar' style='width: 20%' aria-valuenow='20' aria-valuemin='0' aria-valuemax='100')
+            .col.mb-sm-2.mb-0
+              .text-medium-emphasis Temperature
+              .fw-semibold 20&amp;#8451 (-0,4%)
+              .progress.progress-thin.mt-2
+                .progress-bar.bg-danger(role='progressbar' style='width: 80%' aria-valuenow='80' aria-valuemin='0' aria-valuemax='100')
+    // /.card.mb-4
+    .row
+      .col-sm-6.col-lg-4
+        .card.mb-4(style='--cui-card-cap-bg: #489aff')
+          .card-header.position-relative.d-flex.justify-content-center.align-items-center
+            i.cis-drop
+            svg.icon.icon-3xl.text-white.my-4
+              use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-rain')
+            .chart-wrapper.position-absolute.top-0.start-0.w-100.h-100
+              canvas#social-box-chart-1(height='90')
+          .card-body.row.text-center
+            .btn-group(role='group' aria-label='Button group with nested dropdown')
+              button.btn.btn-info(type='button') On
+              button.btn.btn-danger(type='button') Off
+      // /.col
+      .col-sm-6.col-lg-4
+        .card.mb-4(style='--cui-card-cap-bg: #f5c033')
+          .card-header.position-relative.d-flex.justify-content-center.align-items-center
+            svg.icon.icon-3xl.text-white.my-4
+              use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-lightbulb')
+            .chart-wrapper.position-absolute.top-0.start-0.w-100.h-100
+              canvas#social-box-chart-2(height='90')
+          .card-body.row.text-center
+            .btn-group(role='group' aria-label='Button group with nested dropdown')
+              button.btn.btn-info(type='button') On
+              button.btn.btn-danger(type='button') Off
+      // /.col
+      .col-sm-6.col-lg-4
+        .card.mb-4(style='--cui-card-cap-bg: #db5252')
+          .card-header.position-relative.d-flex.justify-content-center.align-items-center
+            svg.icon.icon-3xl.text-white.my-4
+              use(xlink:href='node_modules/@coreui/icons/sprites/free.svg#cil-sun')
+            .chart-wrapper.position-absolute.top-0.start-0.w-100.h-100
+              canvas#social-box-chart-3(height='90')
+          .card-body.row.text-center
+            .btn-group(role='group' aria-label='Button group with nested dropdown')
+              button.btn.btn-info(type='button') On
+              button.btn.btn-danger(type='button') Off
+      // /.col
+    // /.row
+    footer.footer
+      div Green House Dashboard
+  // CoreUI and necessary plugins
+  script(src='node_modules/@coreui/coreui/dist/js/coreui.bundle.min.js')
+  script(src='node_modules/simplebar/dist/simplebar.min.js')
+  // Plugins and scripts required by this view
+  script(src='node_modules/chart.js/dist/chart.min.js')
+  script(src='node_modules/@coreui/chartjs/dist/js/coreui-chartjs.js')
+  script(src='node_modules/@coreui/utils/dist/coreui-utils.js')
+  script(src='js/main.js')
+  script.
