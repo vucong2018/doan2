@@ -89,8 +89,5 @@ client.loop_background()
 
 
 while True:
-    value = random.randint(0, 100)
-    print("Cap nhat:", value)
-    client.publish("bbc-temp", value)
-    time.sleep(30)
+    pass
     
