@@ -10337,13 +10337,19 @@ html:not([dir="rtl"]) .rounded-start {
   transition: .4s;
 }
 
-input:checked + .slider {
-  background-color: #2196F3;
+input:checked + .slider.info {
+  background-color: rgba(var(--cui-info-rgb), var(--cui-bg-opacity)) !important;
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+input:checked + .slider.warning {
+  background-color: rgba(var(--cui-warning-rgb), var(--cui-bg-opacity)) !important;
 }
+
+input:checked + .slider.danger {
+  background-color: rgba(var(--cui-danger-rgb), var(--cui-bg-opacity)) !important;
+}
+
+
 
 input:checked + .slider:before {
   -webkit-transform: translateX(66px);
