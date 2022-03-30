@@ -20,14 +20,14 @@ const lineChart = new Chart(document.getElementById('canvas-1'), {
       borderColor: 'rgba(220, 220, 220, 1)',
       pointBackgroundColor: 'rgba(220, 220, 220, 1)',
       pointBorderColor: '#fff',
-      data: [random(), random(), random(), random(), random(), random(), random()]
+      data: [20,20,20, 20, 20, 20,20]
     }, {
       label: 'My Second dataset',
       backgroundColor: 'rgba(151, 187, 205, 0.2)',
       borderColor: 'rgba(151, 187, 205, 1)',
       pointBackgroundColor: 'rgba(151, 187, 205, 1)',
       pointBorderColor: '#fff',
-      data: [random(), random(), random(), random(), random(), random(), random()]
+      data: [20,20,20, 20, 20, 20,20]
     }]
   },
   options: {
@@ -44,13 +44,13 @@ const barChart = new Chart(document.getElementById('canvas-2'), {
       borderColor: 'rgba(220, 220, 220, 0.8)',
       highlightFill: 'rgba(220, 220, 220, 0.75)',
       highlightStroke: 'rgba(220, 220, 220, 1)',
-      data: [random(), random(), random(), random(), random(), random(), random()]
+      data: [20,20,20, 20, 20, 20,20]
     }, {
       backgroundColor: 'rgba(151, 187, 205, 0.5)',
       borderColor: 'rgba(151, 187, 205, 0.8)',
       highlightFill: 'rgba(151, 187, 205, 0.75)',
       highlightStroke: 'rgba(151, 187, 205, 1)',
-      data: [random(), random(), random(), random(), random(), random(), random()]
+      data: [20,20,20, 20, 20, 20,20]
     }]
   },
   options: {
@@ -85,7 +85,7 @@ const radarChart = new Chart(document.getElementById('canvas-4'), {
       pointBorderColor: '#fff',
       pointHighlightFill: '#fff',
       pointHighlightStroke: 'rgba(220, 220, 220, 1)',
-      data: [65, 59, 90, 81, 56, 55, 40]
+      data: [20,20,20, 20, 20, 20,20]
     }, {
       label: 'My Second dataset',
       backgroundColor: 'rgba(151, 187, 205, 0.2)',

@@ -46,7 +46,7 @@ client.loop_background()
 
 
 while True:
-    value_humi = random.randint(0,90)
+    value_humi = random.randint(20,90)
     value_temp = random.randint(0,50)
     value_light = random.randint(0,1023)
     value_soil = random.randint(0,1023)
