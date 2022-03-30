@@ -2583,6 +2583,8 @@ html:not([dir="rtl"]) .form-check-inline .form-check-input ~ .invalid-feedback {
     border-color: var(--cui-btn-disabled-border-color, transparent);
     opacity: 0.65; }
 
+
+
 .btn-primary {
   --cui-btn-bg: #321fdb;
   --cui-btn-border-color: #321fdb;
@@ -10290,3 +10292,8 @@ html:not([dir="rtl"]) .rounded-start {
     font-style: italic; }
 
 /*# sourceMappingURL=style.css.map */
+
+.btn-reload:hover
+{
+  color: var(--cui-btn-hover-color, #52a8ff);
+}
