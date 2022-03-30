@@ -14,7 +14,7 @@
   <div class="body flex-grow-1 px-3">
     <div class="container-lg">
       <div class="row">
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-xl-3">
           <div class="card mb-4 text-white bg-primary">
             <div class="card-body pb-0 d-flex justify-content-between align-items-start">
               <div>
@@ -41,7 +41,7 @@
           </div>
         </div>
         <!-- /.col-->
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-xl-3">
           <div class="card mb-4 text-white bg-info">
             <div class="card-body pb-0 d-flex justify-content-between align-items-start">
               <div>
@@ -66,7 +66,7 @@
           </div>
         </div>
         <!-- /.col-->
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-xl-3">
           <div class="card mb-4 text-white bg-warning">
             <div class="card-body pb-0 d-flex justify-content-between align-items-start">
               <div>
@@ -91,7 +91,7 @@
           </div>
         </div>
         <!-- /.col-->
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-xl-3">
           <div class="card mb-4 text-white bg-danger">
             <div class="card-body pb-0 d-flex justify-content-between align-items-start">
               <div>
@@ -137,19 +137,28 @@
           </div>
         </div>
         <div class="card-footer">
-          <div class="row row-cols-1 row-cols-md-3 text-center">
+          <div class="row row-cols-1 row-cols-md-4 text-center">
             <div class="col mb-sm-2 mb-0">
-              <div class="text-medium-emphasis">Light</div>
-              <div class="fw-semibold">12W (0,05%)</div>
+              <div class="text-medium-emphasis">Humiditary</div>
+              <div class="fw-semibold">20&#8451 (-0,4%)</div>
               <div class="progress progress-thin mt-2">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
+            
             <div class="col mb-sm-2 mb-0">
               <div class="text-medium-emphasis">Moisture</div>
               <div class="fw-semibold">73,8% (0,2%)</div>
               <div class="progress progress-thin mt-2">
                 <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
+
+            <div class="col mb-sm-2 mb-0">
+              <div class="text-medium-emphasis">Light</div>
+              <div class="fw-semibold">12W (0,05%)</div>
+              <div class="progress progress-thin mt-2">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
 
@@ -160,72 +169,88 @@
                 <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
+            
 
             </div>
           </div>
         </div>
       </div>
           <!-- /.card.mb-4-->
-          <div class="row">
-            <div class="col-sm-6 col-lg-4">
-              <div class="card mb-4" style="--cui-card-cap-bg: #489aff">
-                <div class="card-header position-relative d-flex justify-content-center align-items-center">
-                  <i class="cis-drop"></i>
-                  <svg class="icon icon-3xl text-white my-4">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-rain"></use>
-                  </svg>
-                  <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
-                    <canvas id="social-box-chart-1" height="90"></canvas>
+          <div class="container-lg">
+            <div class="row">
+              <div class="col-sm-6 col-lg-4">
+                <div class="card mb-4" style="--cui-card-cap-bg: #489aff">
+                  <div class="card-header position-relative d-flex justify-content-center align-items-center">
+                    <i class="cis-drop"></i>
+                    <svg class="icon icon-3xl text-white my-4">
+                      <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-rain"></use>
+                    </svg>
+                    <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
+                      <canvas id="social-box-chart-1" height="90"></canvas>
+                    </div>
                   </div>
-                </div>
-                <div class="card-body row text-center">
-                  <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <button type="button" class="btn btn-info">On</button>
-                    <button type="button" class="btn btn-danger">Off</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- /.col-->
-            <div class="col-sm-6 col-lg-4">
-              <div class="card mb-4" style="--cui-card-cap-bg: #f5c033">
-                <div class="card-header position-relative d-flex justify-content-center align-items-center">
-                  <svg class="icon icon-3xl text-white my-4">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-lightbulb"></use>
-                  </svg>
-                  <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
-                    <canvas id="social-box-chart-2" height="90"></canvas>
-                  </div>
-                </div>
-                <div class="card-body row text-center">
-                  <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <button type="button" class="btn btn-info">On</button>
-                    <button type="button" class="btn btn-danger">Off</button>
+                  <div class="card-body row text-center">
+                    <div class="btn-group btn-slider" role="group" aria-label="Button group with nested dropdown">
+                      OFF
+                      <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                      </label>
+                      ON
+                    </div>
+                    
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- /.col-->
-            <div class="col-sm-6 col-lg-4">
-              <div class="card mb-4" style="--cui-card-cap-bg: #db5252">
-                <div class="card-header position-relative d-flex justify-content-center align-items-center">
-                  <svg class="icon icon-3xl text-white my-4">
-                    <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-sun"></use>
-                  </svg>
-                  <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
-                    <canvas id="social-box-chart-3" height="90"></canvas>
+              <!-- /.col-->
+              <div class="col-sm-6 col-lg-4">
+                <div class="card mb-4" style="--cui-card-cap-bg: #f5c033">
+                  <div class="card-header position-relative d-flex justify-content-center align-items-center">
+                    <svg class="icon icon-3xl text-white my-4">
+                      <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-lightbulb"></use>
+                    </svg>
+                    <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
+                      <canvas id="social-box-chart-2" height="90"></canvas>
+                    </div>
                   </div>
-                </div>
-                <div class="card-body row text-center">
-                  <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <button type="button" class="btn btn-info">On</button>
-                    <button type="button" class="btn btn-danger">Off</button>
+                  <div class="card-body row text-center">
+                    <div class="btn-group btn-slider" role="group" aria-label="Button group with nested dropdown">
+                      OFF
+                      <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                      </label>
+                      ON
+                    </div>
                   </div>
                 </div>
               </div>
+              <!-- /.col-->
+              <div class="col-sm-6 col-lg-4">
+                <div class="card mb-4" style="--cui-card-cap-bg: #db5252">
+                  <div class="card-header position-relative d-flex justify-content-center align-items-center">
+                    <svg class="icon icon-3xl text-white my-4">
+                      <use xlink:href="/static/assets/vendors/@coreui/icons/svg/free.svg#cil-sun"></use>
+                    </svg>
+                    <div class="chart-wrapper position-absolute top-0 start-0 w-100 h-100">
+                      <canvas id="social-box-chart-3" height="90"></canvas>
+                    </div>
+                  </div>
+                  <div class="card-body row text-center">
+                    <div class="btn-group btn-slider" role="group" aria-label="Button group with nested dropdown">
+                      OFF
+                      <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                      </label>
+                      ON
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- /.col-->
             </div>
-            
-            <!-- /.col-->
           </div>
           <!-- /.row-->
 
