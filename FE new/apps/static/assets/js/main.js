@@ -21,6 +21,10 @@ const random = (min, max) => {
 var cardChart1, cardChart2,cardChart3, cardChart4, mainChart;
 var getTempData = $.get('/data')
 getTempData.done(function(results){
+  $("#humi_value").text(results.humi_list[6] + "%");
+  $("#soil_value").text(results.soil_list[6] + " Points");
+  $("#light_value").text(results.light_list[6] + " Points");
+  $("#temp_value").text(results.temp_list[6]);
   // Humi
     type = 'line'
     data_1 = {
@@ -366,6 +370,10 @@ function updateChart() {
   var getUpadte = $.get('/data')
   
   getUpadte.done(function(results){
+    $("#humi_value").text(results.humi_list[6] + "%");
+    $("#soil_value").text(results.soil_list[6] + " Points");
+    $("#light_value").text(results.light_list[6] + " Points");
+    $("#temp_value").text(results.temp_list[6]);
     cardChart1.data.datasets.pop()
     cardChart2.data.datasets.pop()
     cardChart3.data.datasets.pop()
