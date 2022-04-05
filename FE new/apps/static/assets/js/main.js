@@ -21,29 +21,20 @@ const random = (min, max) => {
 var cardChart1, cardChart2,cardChart3, cardChart4, mainChart;
 var getTempData = $.get('/data')
 
-function checkdata(data, tags)
+function checkdata(data, tag1, tag2, now_value, min_value, max_value)
 {
+  var percent = Math.round(((now_value - min_value) / (max_value - min_value)) * 100) + "%";
   if (data > 0)
   {
     data = "+" + data;
-    $(tags).text(data + "%");
-    $(tags + " ~ svg")[0].classList.remove("hide-icon");
+    $(tag1 + " ~ svg")[0].classList.remove("hide-icon");
   }
   else if (data < 0)
   {
-    $(tags).text(data + "%");
-    $(tags + " ~ svg")[1].classList.remove("hide-icon");
+    $(tag1 + " ~ svg")[1].classList.remove("hide-icon");
   }
-  else
-  {
-    $(tags).text(data + "%");
-  }
-  // if (data < 0)
-  // {
-  //   // data = toString("+" + data);
-  //   $(toString(tags + " ~ svg"))[1].classList.remove("hide-icon");
-  // }
-  // else {}
+  $(tag1).text(data + "%");
+  $(tag2).css("width", percent);
 }
 
 getTempData.done(function(results){
@@ -51,13 +42,13 @@ getTempData.done(function(results){
   var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
   var light_change = Math.round(((results.light_list[6] / results.light_list[5]) - 1.0) * 10000) / 100;
   var temp_change = Math.round(((results.temp_list[6] / results.temp_list[5]) - 1.0) * 10000) / 100;
-  checkdata(humi_change, ".humi_chan");
-  checkdata(soil_change, ".soil_chan");
-  checkdata(light_change, ".light_chan");
-  checkdata(temp_change, ".temp_chan");
+  checkdata(humi_change, ".humi_chan", ".humi_bar", results.humi_list[6], 20, 90);
+  checkdata(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
+  checkdata(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
+  checkdata(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
   $(".humi_value").text(results.humi_list[6] + "%");
-  $(".soil_value").text(results.soil_list[6] + " Points");
-  $(".light_value").text(results.light_list[6] + " Points");
+  $(".soil_value").text(results.soil_list[6] + " Pts");
+  $(".light_value").text(results.light_list[6] + " Pts");
   $(".temp_value").text(results.temp_list[6]);
   // Humi
     type = 'line'
@@ -404,9 +395,17 @@ function updateChart() {
   var getUpadte = $.get('/data')
   
   getUpadte.done(function(results){
+    var humi_change = Math.round(((results.humi_list[6] / results.humi_list[5]) - 1.0) * 10000) / 100;
+    var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
+    var light_change = Math.round(((results.light_list[6] / results.light_list[5]) - 1.0) * 10000) / 100;
+    var temp_change = Math.round(((results.temp_list[6] / results.temp_list[5]) - 1.0) * 10000) / 100;
+    checkdata(humi_change, ".humi_chan", ".humi_bar", results.humi_list[6], 20, 90);
+    checkdata(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
+    checkdata(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
+    checkdata(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
     $(".humi_value").text(results.humi_list[6] + "%");
-    $(".soil_value").text(results.soil_list[6] + " Points");
-    $(".light_value").text(results.light_list[6] + " Points");
+    $(".soil_value").text(results.soil_list[6] + " Pts");
+    $(".light_value").text(results.light_list[6] + " Pts");
     $(".temp_value").text(results.temp_list[6]);
     cardChart1.data.datasets.pop()
     cardChart2.data.datasets.pop()
