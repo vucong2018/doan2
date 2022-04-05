@@ -51,7 +51,7 @@ getTempData.done(function(results){
   $(".light_value").text(results.light_list[6] + " Pts");
   $(".temp_value").text(results.temp_list[6]);
   // Humi
-    type = 'line'
+    type = 'line';
     data_1 = {
       labels: results.time_list,
       datasets: [{
@@ -94,7 +94,7 @@ getTempData.done(function(results){
       elements: {
         line: {
           borderWidth: 1,
-          tension: 0.4
+          // tension: 0.4
         },
         point: {
           radius: 4,
@@ -165,7 +165,7 @@ getTempData.done(function(results){
     data: {
       labels: results.time_list,
       datasets: [{
-        label: 'My First dataset',
+        label: 'Data of Soil',
         backgroundColor: 'transparent',
         borderColor: 'rgba(255,255,255,.55)',
         pointBackgroundColor: coreui.Utils.getStyle('--cui-info'),
@@ -220,7 +220,7 @@ getTempData.done(function(results){
     data: {
       labels: results.time_list,
       datasets: [{
-        label: 'My First dataset',
+        label: 'Data of Light',
         backgroundColor: 'transparent',
         borderColor: 'rgba(255,255,255,.55)',
         pointBackgroundColor: coreui.Utils.getStyle('--cui-yellow'),
@@ -276,7 +276,7 @@ getTempData.done(function(results){
     data: {
       labels: results.time_list,
       datasets: [{
-        label: 'My First dataset',
+        label: 'Data of Temp',
         backgroundColor: 'transparent',
         borderColor: 'rgba(255,255,255,.55)',
         pointBackgroundColor: coreui.Utils.getStyle('--cui-red'),
@@ -433,7 +433,7 @@ function updateChart() {
         data: results.light_list
     })
     cardChart4.data.datasets.push({
-      label: 'My First dataset',
+      label: 'Data of Temp',
         backgroundColor: 'transparent',
         borderColor: 'rgba(255,255,255,.55)',
         pointBackgroundColor: coreui.Utils.getStyle('--cui-red'),
