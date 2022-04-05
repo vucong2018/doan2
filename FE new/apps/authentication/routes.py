@@ -16,9 +16,7 @@ from apps.authentication.util import verify_pass
 @blueprint.route('/')
 def route_default():
     return redirect(url_for('authentication_blueprint.login'))
-
-
-# Login & Registration
+#login
 
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
