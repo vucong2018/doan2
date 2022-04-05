@@ -20,7 +20,41 @@ const random = (min, max) => {
 }; // eslint-disable-next-line no-unused-vars
 var cardChart1, cardChart2,cardChart3, cardChart4, mainChart;
 var getTempData = $.get('/data')
+
+function checkdata(data, tags)
+{
+  if (data > 0)
+  {
+    data = "+" + data;
+    $(tags).text(data + "%");
+    $(tags + " ~ svg")[0].classList.remove("hide-icon");
+  }
+  else if (data < 0)
+  {
+    $(tags).text(data + "%");
+    $(tags + " ~ svg")[1].classList.remove("hide-icon");
+  }
+  else
+  {
+    $(tags).text(data + "%");
+  }
+  // if (data < 0)
+  // {
+  //   // data = toString("+" + data);
+  //   $(toString(tags + " ~ svg"))[1].classList.remove("hide-icon");
+  // }
+  // else {}
+}
+
 getTempData.done(function(results){
+  var humi_change = Math.round(((results.humi_list[6] / results.humi_list[5]) - 1.0) * 10000) / 100;
+  var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
+  var light_change = Math.round(((results.light_list[6] / results.light_list[5]) - 1.0) * 10000) / 100;
+  var temp_change = Math.round(((results.temp_list[6] / results.temp_list[5]) - 1.0) * 10000) / 100;
+  checkdata(humi_change, ".humi_chan");
+  checkdata(soil_change, ".soil_chan");
+  checkdata(light_change, ".light_chan");
+  checkdata(temp_change, ".temp_chan");
   $(".humi_value").text(results.humi_list[6] + "%");
   $(".soil_value").text(results.soil_list[6] + " Points");
   $(".light_value").text(results.light_list[6] + " Points");

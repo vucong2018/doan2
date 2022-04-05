@@ -10376,3 +10376,8 @@ input:checked + .slider:before {
 {
   font-size: 20px;
 }
+
+.hide-icon
+{
+  display: none;
+}
