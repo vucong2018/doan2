@@ -10,9 +10,15 @@ import sys
 from Adafruit_IO import MQTTClient
 
 AIO_FEED_ID = {"bbc-pump", "bbc-fan", "bbc-led", "bbc-mode"}
-AIO_USERNAME = "trongho912"
-AIO_KEY = "aio_oXwW17pj9GUjy3rCioqNINAIfG1K"
+#
+# AIO_USERNAME = "trongho912"
+# AIO_KEY = "aio_oXwW17pj9GUjy3rCioqNINAIfG1K"
 
+AIO_USERNAME_1 = "trongho912"
+AIO_KEY_1 = "aio_oXwW17pj9GUjy3rCioqNINAIfG1K"
+
+AIO_USERNAME_2 = "hotrong912"
+AIO_KEY_2 = "aio_JzNU604DzalToD2urJOCDDkhg5LO"
 
 def connected(client):
     print("Ket noi thanh cong...")
@@ -35,15 +41,30 @@ def message(client, feed_id, payload):
     if isMicrobitConnected:
         ser.write((str(code)).encode())
 
+# client = MQTTClient(AIO_USERNAME, AIO_KEY)
+# client.on_connect = connected
+# client.on_disconnect = disconnected
+# client.on_message = message
+# client.on_subscribe = subscribe
+# client.connect()
+# client.loop_background()
 
-client = MQTTClient(AIO_USERNAME, AIO_KEY)
-client.on_connect = connected
-client.on_disconnect = disconnected
-client.on_message = message
-client.on_subscribe = subscribe
-client.connect()
-client.loop_background()
+client1 = MQTTClient(AIO_USERNAME_1, AIO_KEY_1)
+client2 = MQTTClient(AIO_USERNAME_2, AIO_KEY_2)
 
+client1.on_connect = connected
+client1.on_disconnect = disconnected
+client1.on_message = message
+client1.on_subscribe = subscribe
+client1.connect()
+client1.loop_background()
+
+client2.on_connect = connected
+client2.on_disconnect = disconnected
+client2.on_message = message
+client2.on_subscribe = subscribe
+client2.connect()
+client2.loop_background()
 
 def getPort():
     ports = serial.tools.list_ports.comports()
@@ -75,19 +96,19 @@ def processData(data):
     VALUE_DATA = splitData[1]
     try:
         if FIELD_DATA == "TEMP":
-            client.publish("bbc-dht11-temp", VALUE_DATA)
-        # elif FIELD_DATA == "HUMID":
-        #     client.publish("bbc-dht11-humid", VALUE_DATA)
+            client1.publish("bbc-dht11-temp", VALUE_DATA)
+        elif FIELD_DATA == "HUMID":
+            client1.publish("bbc-dht11-humid", VALUE_DATA)
         elif FIELD_DATA == "LIGHT":
-            client.publish("bbc-light", VALUE_DATA)
+            client1.publish("bbc-light", VALUE_DATA)
         elif FIELD_DATA == "SOIL":
-            client.publish("bbc-soil", VALUE_DATA)
+            client1.publish("bbc-soil", VALUE_DATA)
         elif FIELD_DATA == "LED":
-            client.publish("bbc-led-auto", VALUE_DATA)
+            client1.publish("bbc-led-auto", VALUE_DATA)
         elif FIELD_DATA == "PUMP":
-            client.publish("bbc-pump-auto", VALUE_DATA)
+            client1.publish("bbc-pump-auto", VALUE_DATA)
         elif FIELD_DATA == "FAN":
-            client.publish("bbc-fan-auto", VALUE_DATA)
+            client1.publish("bbc-fan-auto", VALUE_DATA)
     except:
         pass
 
@@ -101,7 +122,6 @@ def readSerial():
             start = mess.find("!")
             end = mess.find("#")
             processData(mess[start:end + 1])
-            # print(me)
             if (end == len(mess)):
                 mess = ""
             else:

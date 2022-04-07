@@ -12,6 +12,8 @@ function DHT11 () {
     NPNLCD.ShowString("Temp: " + ("" + temp_var), 0, 0)
     // NPNLCD.ShowString("Humid: " + ("" + humid_var), 0, 1)
     serial.writeString("!TEMP:" + ("" + temp_var) + "#")
+    // NPNLCD.ShowString("Humid: " + ("" + humid_var), 0, 1)
+    serial.writeString("!HUMID:" + ("" + humid_var) + "#")
 }
 function LED_control () {
     if (mode == 0) {
