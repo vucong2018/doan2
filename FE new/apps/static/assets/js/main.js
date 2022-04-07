@@ -18,13 +18,45 @@ const random = (min, max) => {
   // eslint-disable-next-line no-mixed-operators
   return Math.floor(Math.random() * (max - min + 1) + min);
 }; // eslint-disable-next-line no-unused-vars
-
+var cardChart1, cardChart2,cardChart3, cardChart4, mainChart;
 var getTempData = $.get('/data')
+
+function checkdata(data, tag1, tag2, now_value, min_value, max_value)
+{
+  var percent = Math.round(((now_value - min_value) / (max_value - min_value)) * 100) + "%";
+  if (data > 0)
+  {
+    data = "+" + data;
+    $(tag1 + " ~ svg")[0].classList.remove("hide-icon");
+    $(tag1 + " ~ svg")[1].classList.add("hide-icon");
+  }
+  else if (data < 0)
+  {
+    $(tag1 + " ~ svg")[1].classList.remove("hide-icon");
+    $(tag1 + " ~ svg")[0].classList.add("hide-icon");
+  }
+  $(tag1).text(data + "%");
+  $(tag2).css("width", percent);
+}
+
 getTempData.done(function(results){
+  var humi_change = Math.round(((results.humi_list[6] / results.humi_list[5]) - 1.0) * 10000) / 100;
+  var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
+  var light_change = Math.round(((results.light_list[6] / results.light_list[5]) - 1.0) * 10000) / 100;
+  var temp_change = Math.round(((results.temp_list[6] / results.temp_list[5]) - 1.0) * 10000) / 100;
+  checkdata(humi_change, ".humi_chan", ".humi_bar", results.humi_list[6], 20, 90);
+  checkdata(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
+  checkdata(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
+  checkdata(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
+  // console.log(results.temp_list[6])
+  // console.log(results.temp_list[5])
+  $(".humi_value").text(results.humi_list[6] + "%");
+  $(".soil_value").text(results.soil_list[6] + " Pts");
+  $(".light_value").text(results.light_list[6] + " Pts");
+  $(".temp_value").text(results.temp_list[6]);
   // Humi
-  var cardChart1 = new Chart(document.getElementById('card-chart1'), {
-    type: 'line',
-    data: {
+    type = 'line';
+    data_1 = {
       labels: results.time_list,
       datasets: [{
         label: 'Data of Humi',
@@ -33,8 +65,8 @@ getTempData.done(function(results){
         pointBackgroundColor: coreui.Utils.getStyle('--cui-primary'),
         data: results.humi_list
       }]
-    },
-    options: {
+    }
+    options_1 = {
       plugins: {
         legend: {
           display: false
@@ -66,7 +98,7 @@ getTempData.done(function(results){
       elements: {
         line: {
           borderWidth: 1,
-          tension: 0.4
+          // tension: 0.4
         },
         point: {
           radius: 4,
@@ -75,15 +107,69 @@ getTempData.done(function(results){
         }
       }
     }
-  });
+    cardChart1 = new Chart(document.getElementById('card-chart1'), {type : type, data : data_1,options : options_1})
+  //   cardChart1 = new Chart(document.getElementById('card-chart1'), {
+  //   type: 'line',
+  //   data: {
+  //     labels: results.time_list,
+  //     datasets: [{
+  //       label: 'Data of Humi',
+  //       backgroundColor: 'transparent',
+  //       borderColor: 'rgba(255,255,255,.55)',
+  //       pointBackgroundColor: coreui.Utils.getStyle('--cui-primary'),
+  //       data: results.humi_list
+  //     }]
+  //   },
+  //   options: {
+  //     plugins: {
+  //       legend: {
+  //         display: false
+  //       }
+  //     },
+  //     maintainAspectRatio: false,
+  //     scales: {
+  //       x: {
+  //         grid: {
+  //           display: false,
+  //           drawBorder: false
+  //         },
+  //         ticks: {
+  //           display: false
+  //         }
+  //       },
+  //       y: {
+  //         min: 10,
+  //         max: 100,
+  //         display: false,
+  //         grid: {
+  //           display: false
+  //         },
+  //         ticks: {
+  //           display: false
+  //         }
+  //       }
+  //     },
+  //     elements: {
+  //       line: {
+  //         borderWidth: 1,
+  //         tension: 0.4
+  //       },
+  //       point: {
+  //         radius: 4,
+  //         hitRadius: 10,
+  //         hoverRadius: 4
+  //       }
+  //     }
+  //   }
+  // });
 
   // Soil
-  var cardChart2 = new Chart(document.getElementById('card-chart2'), {
+    cardChart2 = new Chart(document.getElementById('card-chart2'), {
     type: 'line',
     data: {
       labels: results.time_list,
       datasets: [{
-        label: 'My First dataset',
+        label: 'Data of Soil',
         backgroundColor: 'transparent',
         borderColor: 'rgba(255,255,255,.55)',
         pointBackgroundColor: coreui.Utils.getStyle('--cui-info'),
@@ -133,12 +219,12 @@ getTempData.done(function(results){
   }); // eslint-disable-next-line no-unused-vars
 
   // Light
-  var cardChart3 = new Chart(document.getElementById('card-chart3'), {
+    cardChart3 = new Chart(document.getElementById('card-chart3'), {
     type: 'line',
     data: {
       labels: results.time_list,
       datasets: [{
-        label: 'My First dataset',
+        label: 'Data of Light',
         backgroundColor: 'transparent',
         borderColor: 'rgba(255,255,255,.55)',
         pointBackgroundColor: coreui.Utils.getStyle('--cui-yellow'),
@@ -189,12 +275,12 @@ getTempData.done(function(results){
   
 
   // Temp
-  var cardChart4 = new Chart(document.getElementById('card-chart4'), {
+    cardChart4 = new Chart(document.getElementById('card-chart4'), {
     type: 'line',
     data: {
       labels: results.time_list,
       datasets: [{
-        label: 'My First dataset',
+        label: 'Data of Temp',
         backgroundColor: 'transparent',
         borderColor: 'rgba(255,255,255,.55)',
         pointBackgroundColor: coreui.Utils.getStyle('--cui-red'),
@@ -244,8 +330,8 @@ getTempData.done(function(results){
   }); // eslint-disable-next-line no-unused-vars
 
 
-  var mainChart = new Chart(document.getElementById('main-chart'), {
-    type: 'line',
+    mainChart = new Chart(document.getElementById('main-chart'), {
+    type: 'bar',
     data: {
       labels: results.time_list,
       datasets: [{
@@ -254,14 +340,14 @@ getTempData.done(function(results){
         borderColor: coreui.Utils.getStyle('--cui-info'),
         pointHoverBackgroundColor: '#fff',
         borderWidth: 2,
-        data: [random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200)],
+        data: results.humi_list,
         fill: true
       }, {
         label: 'My Second dataset',
         borderColor: coreui.Utils.getStyle('--cui-success'),
         pointHoverBackgroundColor: '#fff',
         borderWidth: 2,
-        data: [random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200), random(50, 200)]
+        data: results.temp_list
       }, {
         label: 'My Third dataset',
         borderColor: coreui.Utils.getStyle('--cui-danger'),
@@ -309,7 +395,66 @@ getTempData.done(function(results){
   });
 });
  
+function updateChart() {
+  var getUpadte = $.get('/data')
+  
+  getUpadte.done(function(results){
+    var humi_change = Math.round(((results.humi_list[6] / results.humi_list[5]) - 1.0) * 10000) / 100;
+    var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
+    var light_change = Math.round(((results.light_list[6] / results.light_list[5]) - 1.0) * 10000) / 100;
+    var temp_change = Math.round(((results.temp_list[6] / results.temp_list[5]) - 1.0) * 10000) / 100;
+    checkdata(humi_change, ".humi_chan", ".humi_bar", results.humi_list[6], 20, 90);
+    checkdata(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
+    checkdata(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
+    checkdata(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
+    $(".humi_value").text(results.humi_list[6] + "%");
+    $(".soil_value").text(results.soil_list[6] + " Pts");
+    $(".light_value").text(results.light_list[6] + " Pts");
+    $(".temp_value").text(results.temp_list[6]);
+    cardChart1.data.datasets.pop()
+    cardChart2.data.datasets.pop()
+    cardChart3.data.datasets.pop()
+    cardChart4.data.datasets.pop()
+    cardChart1.data.datasets.push({
+      label: 'Data of Humi',
+        backgroundColor: 'transparent',
+        borderColor: 'rgba(255,255,255,.55)',
+        pointBackgroundColor: coreui.Utils.getStyle('--cui-primary'),
+        data: results.humi_list
+    })
+    cardChart2.data.datasets.push({
+      label: 'Data of Soil',
+        backgroundColor: 'transparent',
+        borderColor: 'rgba(255,255,255,.55)',
+        pointBackgroundColor: coreui.Utils.getStyle('--cui-info'),
+        data: results.soil_list
+    })
+    cardChart3.data.datasets.push({
+      label: 'Data of Light',
+        backgroundColor: 'transparent',
+        borderColor: 'rgba(255,255,255,.55)',
+        pointBackgroundColor: coreui.Utils.getStyle('--cui-yellow'),
+        data: results.light_list
+    })
+    cardChart4.data.datasets.push({
+      label: 'Data of Temp',
+        backgroundColor: 'transparent',
+        borderColor: 'rgba(255,255,255,.55)',
+        pointBackgroundColor: coreui.Utils.getStyle('--cui-red'),
+        data: results.temp_list
+    })
+    cardChart1.update()
+    cardChart2.update()
+    cardChart3.update()
+    cardChart4.update()
+      
+    
+  })
 
+  
+  
+}
+$("#refresh").on('click', updateChart)
 
 
 
