@@ -46,6 +46,8 @@ getTempData.done(function(results){
   checkdata(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
   checkdata(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
   checkdata(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
+  console.log(results.temp_list[6])
+  console.log(results.temp_list[5])
   $(".humi_value").text(results.humi_list[6] + "%");
   $(".soil_value").text(results.soil_list[6] + " Pts");
   $(".light_value").text(results.light_list[6] + " Pts");

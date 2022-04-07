@@ -47,9 +47,9 @@ client.loop_background()
 
 while True:
     value_humi = random.randint(20,90)
-    value_temp = random.randint(0,50)
-    value_light = random.randint(0,1023)
-    value_soil = random.randint(0,1023)
+    value_temp = random.randint(1,50)
+    value_light = random.randint(1,1023)
+    value_soil = random.randint(1,1023)
     client.publish("bbc-dht11-humi", value_humi)
     client.publish("bbc-dht11-temp", value_temp)
     client.publish("bbc-light", value_light)
