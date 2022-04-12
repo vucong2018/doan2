@@ -443,10 +443,39 @@ function updateChart() {
         pointBackgroundColor: coreui.Utils.getStyle('--cui-red'),
         data: results.temp_list
     })
+    cardChart1.data.labels = results.time_list
+    cardChart2.data.labels = results.time_list
+    cardChart3.data.labels = results.time_list
+    cardChart4.data.labels = results.time_list
+    mainChart.data.labels = results.time_list
+    mainChart.data.datasets =[{
+      label: 'My First dataset',
+      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--cui-info'), 10),
+      borderColor: coreui.Utils.getStyle('--cui-info'),
+      pointHoverBackgroundColor: '#fff',
+      borderWidth: 2,
+      data: results.humi_list,
+      fill: true
+    }, {
+      label: 'My Second dataset',
+      borderColor: coreui.Utils.getStyle('--cui-success'),
+      pointHoverBackgroundColor: '#fff',
+      borderWidth: 2,
+      data: results.temp_list
+    }, {
+      label: 'My Third dataset',
+      borderColor: coreui.Utils.getStyle('--cui-danger'),
+      pointHoverBackgroundColor: '#fff',
+      borderWidth: 1,
+      borderDash: [8, 5],
+      data: [100, 100, 100, 100, 100, 100, 100]
+    }]
+    
     cardChart1.update()
     cardChart2.update()
     cardChart3.update()
     cardChart4.update()
+    mainChart.update()
       
     
   })
