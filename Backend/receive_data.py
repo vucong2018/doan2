@@ -10,9 +10,9 @@ from  Adafruit_IO import  MQTTClient
 
 
 
-AIO_FEED_IDS = ["bbc-dht11-humi", "bbc-dht11-temp", "bbc-light", "bbc-soil", "fan", "led", "rainulator"]
-AIO_USERNAME = "vucong2018"
-AIO_KEY = "aio_ARPK90JrZ5WSm9dG8wsV0TVAKU4y"
+AIO_FEED_IDS = ["bbc-dht11-humid", "bbc-dht11-temp", "bbc-light", "bbc-soil", "fan", "led", "rainulator"]
+AIO_USERNAME = "trongho912"
+AIO_KEY = "aio_oXwW17pj9GUjy3rCioqNINAIfG1K"
 
 
 
@@ -60,8 +60,8 @@ def add_data_record (key, payload, record):
         
                     
 def message(client, feed_id, payload):
-    if feed_id == 'bbc-dht11-humi':
-        print('bbc-dht11-humi is comming...: ' + payload)
+    if feed_id == 'bbc-dht11-humid':
+        print('bbc-dht11-humid is comming...: ' + payload)
         add_data_record ('humi', payload, record)
     elif feed_id == 'bbc-dht11-temp':
         print('bbc-dht11-temp is comming...: ' + payload)
@@ -70,7 +70,7 @@ def message(client, feed_id, payload):
         print('bbc-light is comming...: ' + payload)
         add_data_record ('light', payload, record)
     elif feed_id == 'bbc-soil':
-        print('bbc-light is comming...: ' + payload)
+        print('bbc-soil is comming...: ' + payload)
         add_data_record ('soil', payload, record)
     elif feed_id == 'fan':
         print('fan is comming...: ' + payload)

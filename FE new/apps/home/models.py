@@ -1,3 +1,4 @@
+from os import device_encoding
 from urllib3 import Retry
 from apps import db
 from datetime import datetime
@@ -30,4 +31,26 @@ class Record(db.Model):
         return float(self.soil)
     def getTime(self):
         return str(self.time)
-    
+class ChangeLog(db.Model):
+    __tablename__ = 'ChangeLog'
+    device_id = db.Column(db.Integer, primary_key = True)
+    dcs_change = db.Column(db.String(1023))
+    time_stamp = db.Column(db.DateTime)
+    def __init__ (self,device_id, dcs_change, time_stamp):
+        self.device_id = device_id
+        self.dcs_change = dcs_change
+        self.time_stamp = time_stamp
+    def getDeviceID(self):
+        return self.device_id
+    def getDcs_Change(self):
+        return self.dcs_change
+    def getTime_Stamp(self):
+        return self.time_stamp
+
+class Device(db.Model):
+    __tablename__ = 'Device'
+    device_id = db.Column(db.Integer, primary_key =  True)
+    state = db.Column(db.Integer)
+    def __init__(self, device_id, state):
+        self.device_id = device_id
+        self.
