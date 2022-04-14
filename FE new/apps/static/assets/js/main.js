@@ -40,15 +40,16 @@ function checkdata(data, tag1, tag2, now_value, min_value, max_value)
 }
 
 $(".data_btn").click(function() {
-  if ($(this).is(':checked') == true)
-  {
-    console.log("Da check")
-  }
-  else
-  {
-    console.log("Chua check")
-  }
+  console.log($(this)[0].id);
+  console.log($(this).is(':checked'))
 })
+
+data_log = [["May_bom_1", "Tang_ap_suat", "LHHB", "12h05p"], ["May_bom_2", "Giam_ap_suat", "VTC", "12h06p"]]
+
+function add_log() {
+  $(".data_log > tbody").html('');
+  // for i
+}
 
 getTempData.done(function(results){
   var humi_change = Math.round(((results.humi_list[6] / results.humi_list[5]) - 1.0) * 10000) / 100;
