@@ -39,6 +39,17 @@ function checkdata(data, tag1, tag2, now_value, min_value, max_value)
   $(tag2).css("width", percent);
 }
 
+$(".data_btn").click(function() {
+  if ($(this).is(':checked') == true)
+  {
+    console.log("Da check")
+  }
+  else
+  {
+    console.log("Chua check")
+  }
+})
+
 getTempData.done(function(results){
   var humi_change = Math.round(((results.humi_list[6] / results.humi_list[5]) - 1.0) * 10000) / 100;
   var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
