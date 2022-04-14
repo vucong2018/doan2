@@ -17,6 +17,11 @@ def index():
     
     return render_template('home/index.html', segment='index', record_u = record)
 
+@blueprint.route('/log', methods = ['POST','GET'])
+@login_required
+def log():
+    return render_template('home/log.html', segment='index')
+
 @blueprint.route('/data', methods = ['POST','GET'])
 @login_required
 def temp_data_chart():
