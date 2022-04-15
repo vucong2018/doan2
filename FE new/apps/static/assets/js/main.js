@@ -19,7 +19,9 @@ const random = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }; // eslint-disable-next-line no-unused-vars
 var cardChart1, cardChart2,cardChart3, cardChart4, mainChart;
-var getTempData = $.get('/data')
+var getTempData = $.get('/data');
+var device_btn = [1,0,1];
+var data_log = [["May_bom_1", "Tang_ap_suat", "LHHB", "12h05p"], ["May_bom_2", "Giam_ap_suat", "VTC", "12h06p"]]
 
 function checkdata(data, tag1, tag2, now_value, min_value, max_value)
 {
@@ -39,17 +41,28 @@ function checkdata(data, tag1, tag2, now_value, min_value, max_value)
   $(tag2).css("width", percent);
 }
 
+// Device button
+$(".data_btn").each(function(index) {
+  if (device_btn[index] == 1) {$(this).prop('checked', 'true');}
+});
+
 $(".data_btn").click(function() {
   console.log($(this)[0].id);
   console.log($(this).is(':checked'))
 })
 
-data_log = [["May_bom_1", "Tang_ap_suat", "LHHB", "12h05p"], ["May_bom_2", "Giam_ap_suat", "VTC", "12h06p"]]
+//Push log data
+$.each(data_log, function(index) {
+  $(".data_log > tbody").append(
+    `<tr>
+      <td>` + (index+1) + `</td>
+      <td>` + data_log[index][0] + `</td>
+      <td>` + data_log[index][1] + `</td>
+      <td>` + data_log[index][2] + `</td>
+      <td>` + data_log[index][3] + `</td>
+    </tr>`)
+});
 
-function add_log() {
-  $(".data_log > tbody").html('');
-  // for i
-}
 
 getTempData.done(function(results){
   var humi_change = Math.round(((results.humi_list[6] / results.humi_list[5]) - 1.0) * 10000) / 100;
