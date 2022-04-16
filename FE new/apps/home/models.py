@@ -33,9 +33,9 @@ class Record(db.Model):
         return str(self.time)
 class ChangeLog(db.Model):
     __tablename__ = 'ChangeLog'
-    device_id = db.Column(db.Integer, primary_key = True)
+    device_id = db.Column(db.Integer)
     dcs_change = db.Column(db.String(1023))
-    time_stamp = db.Column(db.DateTime)
+    time_stamp = db.Column(db.DateTime, primary_key = True)
     def __init__ (self,device_id, dcs_change, time_stamp):
         self.device_id = device_id
         self.dcs_change = dcs_change
