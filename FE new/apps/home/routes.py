@@ -3,7 +3,7 @@ from apps.home import blueprint
 from flask import jsonify, render_template, request, session
 from flask_login import login_required
 from jinja2 import TemplateNotFound
-from apps.home.models import Record
+from apps.home.models import Record, ChangeLog
 
 # import models
 
@@ -17,10 +17,18 @@ def index():
     
     return render_template('home/index.html', segment='index', record_u = record)
 
-@blueprint.route('/log', methods = ['GET'])
+@blueprint.route('/log', methods = ['GET', 'POST'])
 @login_required
 def log():
-    return render_template('home/log.html', segment='index')
+    data_log = ChangeLog.query.all()
+    device_ids = []
+    description_change = []
+    time_change = []
+    for i in range (-3,0):
+        device_ids += [data_log[i].getDeviceID()]
+        description_change += [data_log[i].getDcs_Change()]
+        time_change += [data_log[i].getTime_Stamp()]
+    return render_template('home/log.html', segment='index', len = len(device_ids), record_u = [device_ids, description_change, time_change])
 
 @blueprint.route('/data', methods = ['POST','GET'])
 @login_required

@@ -52,16 +52,16 @@ $(".data_btn").click(function() {
 })
 
 //Push log data
-$.each(data_log, function(index) {
-  $(".data_log > tbody").append(
-    `<tr>
-      <td>` + (index+1) + `</td>
-      <td>` + data_log[index][0] + `</td>
-      <td>` + data_log[index][1] + `</td>
-      <td>` + data_log[index][2] + `</td>
-      <td>` + data_log[index][3] + `</td>
-    </tr>`)
-});
+// $.each(data_log, function(index) {
+//   $(".data_log > tbody").append(
+//     `<tr>
+//       <td>` + (index+1) + `</td>
+//       <td>` + data_log[index][0] + `</td>
+//       <td>` + data_log[index][1] + `</td>
+//       <td>` + data_log[index][2] + `</td>
+//       <td>` + data_log[index][3] + `</td>
+//     </tr>`)
+// });
 
 
 getTempData.done(function(results){

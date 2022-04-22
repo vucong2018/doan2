@@ -25,27 +25,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- <tr>
-                    <td>1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr>
+                  {%for i in range(0, len)%}
                   <tr>
-                    <td>2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@mdo</td>
+                    <td>{{i+1}}</th>
+                    <td>{{record_u[0][i]}}</td>
+                    <td>{{record_u[1][i]}}</td>
+                    <td>Bão</td>
+                    <td>{{record_u[2][i]}}</td>
                   </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                    <td>@mdo</td>
-                  </tr> -->
+                  {%endfor%}
                 </tbody>
               </table>
         </div>

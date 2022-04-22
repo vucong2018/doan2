@@ -46,6 +46,8 @@ class ChangeLog(db.Model):
         return self.dcs_change
     def getTime_Stamp(self):
         return self.time_stamp
+    def getFullLog(self):
+        return [str(self.device_id), str(self.dcs_change), str(self.time_stamp)]
 
 class Device(db.Model):
     __tablename__ = 'Device'
