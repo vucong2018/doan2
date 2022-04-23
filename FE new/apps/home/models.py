@@ -55,4 +55,9 @@ class Device(db.Model):
     state = db.Column(db.Integer)
     def __init__(self, device_id, state):
         self.device_id = device_id
+        self.state = state
+    def getID(self):
+        return self.device_id
+    def getState(self):
+        return self.state
         
