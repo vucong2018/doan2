@@ -32,6 +32,7 @@ def device():
 @login_required
 def log():
     data_log = ChangeLog.query.all()
+    name = 'Bao'
     device_ids = []
     description_change = []
     time_change = []
@@ -39,7 +40,7 @@ def log():
         device_ids += [data_log[i].getDeviceID()]
         description_change += [data_log[i].getDcs_Change()]
         time_change += [data_log[i].getTime_Stamp()]
-    return render_template('home/log.html', segment='log', bread_crumb = 'Log', len = len(device_ids), record_u = [device_ids, description_change, time_change])
+    return render_template('home/log.html', segment='log', bread_crumb = 'Log', len = len(device_ids), name_u = name, record_u = [device_ids, description_change, time_change])
 
 @blueprint.route('/data', methods = ['POST','GET'])
 @login_required

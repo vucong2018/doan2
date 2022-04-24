@@ -20,7 +20,6 @@ const random = (min, max) => {
 }; // eslint-disable-next-line no-unused-vars
 var cardChart1, cardChart2,cardChart3, cardChart4, mainChart;
 var getTempData = $.get('/data');
-var device_btn = [1,0,1];
 
 function checkdata(data, tag1, tag2, now_value, min_value, max_value)
 {
@@ -47,7 +46,7 @@ $.get('/device').done(function(results) {
 })
 
 $(".data_btn").click(function() {
-  console.log($(this)[0].id);
+  console.log($(this)[0].name);
   console.log($(this).is(':checked'))
 })
 
