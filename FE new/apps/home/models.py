@@ -35,19 +35,23 @@ class ChangeLog(db.Model):
     __tablename__ = 'ChangeLog'
     device_id = db.Column(db.Integer)
     dcs_change = db.Column(db.String(1023))
+    human_name = db.Column(db.String(1023))
     time_stamp = db.Column(db.DateTime, primary_key = True)
-    def __init__ (self,device_id, dcs_change, time_stamp):
+    def __init__ (self,device_id, human_name, dcs_change, time_stamp):
         self.device_id = device_id
+        self.human_name = human_name
         self.dcs_change = dcs_change
         self.time_stamp = time_stamp
     def getDeviceID(self):
         return self.device_id
+    def getHumanName(self):
+        return self.human_name
     def getDcs_Change(self):
         return self.dcs_change
     def getTime_Stamp(self):
         return self.time_stamp
     def getFullLog(self):
-        return [str(self.device_id), str(self.dcs_change), str(self.time_stamp)]
+        return [str(self.device_id), str(self.human_name), str(self.dcs_change), str(self.time_stamp)]
 
 class Device(db.Model):
     __tablename__ = 'Device'

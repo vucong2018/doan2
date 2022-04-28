@@ -1,6 +1,7 @@
 from select import select
+from apps import db
 from apps.home import blueprint
-from flask import jsonify, render_template, request, session
+from flask import Response, flash, jsonify, render_template, request, session, json
 from flask_login import login_required
 from jinja2 import TemplateNotFound
 from apps.home.models import Record, ChangeLog, Device
@@ -27,6 +28,16 @@ def device():
         device_state += [device[i].getState()]
     return jsonify({'device_id': device_id,
                     'device_state': device_state})
+
+
+@blueprint.route('/device-change/<d_id>', methods = ['GET', 'POST'])
+@login_required
+def change(d_id):
+    dv_id = json.loads(d_id)
+    device_change = Device.query.filter_by(device_id = dv_id).first()
+    device_change.state = 1 if device_change.state == 0 else 0
+    db.session.commit()
+    return jsonify()
 
 @blueprint.route('/log', methods = ['GET', 'POST'])
 @login_required

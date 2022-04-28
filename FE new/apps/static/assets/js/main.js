@@ -7,6 +7,7 @@
  * --------------------------------------------------------------------------
  */
 // Disable the on-canvas tooltip
+
 Chart.defaults.pointHitDetectionRadius = 1;
 Chart.defaults.plugins.tooltip.enabled = false;
 Chart.defaults.plugins.tooltip.mode = 'index';
@@ -46,8 +47,11 @@ $.get('/device').done(function(results) {
 })
 
 $(".data_btn").click(function() {
-  console.log($(this)[0].name);
-  console.log($(this).is(':checked'))
+  d_id = $(this)[0].name
+  d_state = ($(this).is(':checked') == true) ? 1 : 0
+  const request = new XMLHttpRequest()
+  request.open('POST', `/device-change/${d_id}`)
+  request.send()
 })
 
 getTempData.done(function(results){
@@ -59,8 +63,6 @@ getTempData.done(function(results){
   checkdata(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
   checkdata(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
   checkdata(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
-  // console.log(results.temp_list[6])
-  // console.log(results.temp_list[5])
   $(".humi_value").text(results.humi_list[6] + "%");
   $(".soil_value").text(results.soil_list[6] + " Pts");
   $(".light_value").text(results.light_list[6] + " Pts");
