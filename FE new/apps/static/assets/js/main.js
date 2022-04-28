@@ -49,9 +49,15 @@ $.get('/device').done(function(results) {
 $(".data_btn").click(function() {
   d_id = $(this)[0].name
   d_state = ($(this).is(':checked') == true) ? 1 : 0
-  const request = new XMLHttpRequest()
-  request.open('POST', `/device-change/${d_id}`)
-  request.send()
+  const request1 = new XMLHttpRequest()
+  request1.open('POST', `/device-change/${d_id}`)
+  request1.send()
+  
+  dcs = (d_state == 1) ? 'OFF TO ON' : 'ON TO OFF'
+  data_log = {device_id: d_id, human: 'Bao', descript: dcs};
+  const request2 = new XMLHttpRequest()
+  request2.open('POST', `/log/${JSON.stringify(data_log)}`)
+  request2.send()
 })
 
 getTempData.done(function(results){

@@ -1,3 +1,4 @@
+from datetime import datetime
 from select import select
 from apps import db
 from apps.home import blueprint
@@ -43,15 +44,27 @@ def change(d_id):
 @login_required
 def log():
     data_log = ChangeLog.query.all()
-    name = 'Bao'
     device_ids = []
+    human = []
     description_change = []
     time_change = []
-    for i in range (-3,0):
-        device_ids += [data_log[i].getDeviceID()]
-        description_change += [data_log[i].getDcs_Change()]
-        time_change += [data_log[i].getTime_Stamp()]
-    return render_template('home/log.html', segment='log', bread_crumb = 'Log', len = len(device_ids), name_u = name, record_u = [device_ids, description_change, time_change])
+    for i in range (-10,0):
+        device_ids += [data_log[-11-i].getDeviceID()]
+        human += [data_log[-11-i].getHumanName()]
+        description_change += [data_log[-11-i].getDcs_Change()]
+        time_change += [data_log[-11-i].getTime_Stamp()]
+    return render_template('home/log.html', segment='log', bread_crumb = 'Log', len = len(device_ids), record_u = [device_ids, human, description_change, time_change])
+
+@blueprint.route('/log/<string:data_log>', methods = ['GET', 'POST'])
+@login_required
+def add_log(data_log):
+    info = json.loads(data_log)
+    add_log = ChangeLog(info['device_id'], info['human'], info['descript'], datetime.now())
+    db.session.add(add_log)
+    db.session.commit()
+    # print()
+    return jsonify(data_log)
+
 
 @blueprint.route('/data', methods = ['POST','GET'])
 @login_required
