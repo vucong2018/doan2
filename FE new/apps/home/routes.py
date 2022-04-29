@@ -3,7 +3,7 @@ from select import select
 from apps import db
 from apps.home import blueprint
 from flask import Response, flash, jsonify, render_template, request, session, json
-from flask_login import login_required
+from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 from apps.home.models import Record, ChangeLog, Device
 
@@ -16,7 +16,7 @@ def index():
     data = Record.query.all()
     record = data[-1].getData()
     
-    return render_template('home/index.html', segment='index', bread_crumb = 'Dashboard', record_u = record)
+    return render_template('home/index.html', segment='index', bread_crumb = 'Dashboard', record_u = record, user = current_user)
 
 @blueprint.route('/device', methods = ['POST','GET'])
 @login_required

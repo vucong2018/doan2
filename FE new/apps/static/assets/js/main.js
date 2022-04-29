@@ -48,9 +48,10 @@ $.get('/device').done(function(results) {
 
 $(".data_btn").click(function() {
   d_id = $(this)[0].name
+  console.log()
   d_state = ($(this).is(':checked') == true) ? 1 : 0
   dcs = (d_state == 1) ? 'OFF TO ON' : 'ON TO OFF'
-  data_log = {device_id: d_id, human: 'Bao', descript: dcs};
+  data_log = {device_id: d_id, human: $('#user_name').html(), descript: dcs};
   $.get(`/device-change/${d_id}`)
   $.get(`/log/${JSON.stringify(data_log)}`)
 })
