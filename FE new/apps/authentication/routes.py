@@ -76,8 +76,9 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        return render_template('accounts/register.html',
-                               msg='User created please <a href="/login">login</a>',
+        return render_template('accounts/login.html',
+                                # 'accounts/register.html',
+                            #    msg='User created please <a href="/login">login</a>',
                                success=True,
                                form=create_account_form)
 
