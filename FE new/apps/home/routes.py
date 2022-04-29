@@ -38,7 +38,7 @@ def change(d_id):
     device_change = Device.query.filter_by(device_id = dv_id).first()
     device_change.state = 1 if device_change.state == 0 else 0
     db.session.commit()
-    return jsonify()
+    return jsonify(d_id)
 
 @blueprint.route('/log', methods = ['GET', 'POST'])
 @login_required
@@ -53,7 +53,7 @@ def log():
         human += [data_log[-11-i].getHumanName()]
         description_change += [data_log[-11-i].getDcs_Change()]
         time_change += [data_log[-11-i].getTime_Stamp()]
-    return render_template('home/log.html', segment='log', bread_crumb = 'Log', len = len(device_ids), record_u = [device_ids, human, description_change, time_change])
+    return render_template('home/log.html', segment='log', bread_crumb = 'Log', len = len(device_ids), record_u = [device_ids, description_change, human, time_change])
 
 @blueprint.route('/log/<string:data_log>', methods = ['GET', 'POST'])
 @login_required
