@@ -42,11 +42,21 @@ function checkdata(data, tag1, tag2, now_value, min_value, max_value)
 
 $.get('/device').done(function(results) {
   $(".data_btn").each(function(index) {
-    if (results.device_state[index] == 1) {$(this).prop('checked', 'true');}
+    if (results.device_state[index] == 1) {$(this).prop('checked', true);}
+    else {$(this).prop('checked', false);}
   });
 })
 
-$(".data_btn").click(function() {
+setInterval(function() {
+  $.get('/device').done(function(results) {
+    $(".data_btn").each(function(index) {
+      if (results.device_state[index] == 1) {$(this).prop('checked', true);}
+      else {$(this).prop('checked', false);}
+    });
+  })
+}, 3000);
+
+$('.data_btn').click(function() {
   d_id = $(this)[0].name
   console.log()
   d_state = ($(this).is(':checked') == true) ? 1 : 0
