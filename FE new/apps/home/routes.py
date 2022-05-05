@@ -30,7 +30,7 @@ def device():
     return jsonify({'device_id': device_id,
                     'device_state': device_state})
 
-
+# ADD MY FUNC
 @blueprint.route('/device-change/<d_id>', methods = ['GET', 'POST'])
 @login_required
 def change(d_id):
