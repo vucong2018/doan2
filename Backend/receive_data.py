@@ -6,13 +6,14 @@ import random
 import re
 import time
 import  sys
+from sqlalchemy import update
 from  Adafruit_IO import  MQTTClient
 
 
 
 AIO_FEED_IDS = ["bbc-dht11-humid", "bbc-dht11-temp", "bbc-light", "bbc-soil", "fan", "led", "rainulator"]
 AIO_USERNAME = "trongho912"
-AIO_KEY = "aio_oXwW17pj9GUjy3rCioqNINAIfG1K"
+AIO_KEY = "aio_oytF90fRihlJABYKs3SGWVqF1SyT"
 
 
 
@@ -30,33 +31,18 @@ def subscribe(client, userdata, mid, granted_qos):
 def disconnected(client):
     print("Ngat ket noi...")
     sys.exit(1)
-record = {
-    'humi' : 'None',
-    'temp' : 'None',
-    'soil' : 'None',
-    'light': 'None',
-}
-def recordIsFull(record):
-    for key in record:
-        if record[key] == 'None':
-            return False   
-    return True
 
-def add_data_record (key, payload, record):
+def update_device_state(key, payload, record):
     if record[key] == 'None':
         record[key] = payload
         
     
-    if recordIsFull(record):
+    
         #QUERY FOR DATABASE
-        u_record = model.Record(temp = record['temp'], humi = record['humi'], soil = record['soil'], light = record['light'], time = datetime.today())
+        u_record = model.Device()
         model.db.session.add(u_record)
         model.db.session.commit()
-        print("Record Full")
-        record['humi'] = 'None'
-        record['temp'] = 'None'
-        record['light'] = 'None'
-        record['soil'] = 'None'
+        
         
                     
 def message(client, feed_id, payload):

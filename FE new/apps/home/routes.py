@@ -1,11 +1,42 @@
 from datetime import datetime
 from select import select
+from turtle import delay
 from apps import db
 from apps.home import blueprint
 from flask import Response, flash, jsonify, render_template, request, session, json
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 from apps.home.models import Record, ChangeLog, Device
+# 
+from datetime import datetime
+
+from distutils.command.clean import clean
+import random
+import re
+import time
+import  sys
+from  Adafruit_IO import  Client
+
+
+
+AIO_FEED_IDS = ["bbc-pump", "bbc-fan", "bbc-led", "bbc-mode"]
+AIO_USERNAME = "hotrong912"
+AIO_KEY = "aio_coTD17WUnijiug5VUX0hnP5QmrQH"
+client = Client(AIO_USERNAME, AIO_KEY)
+
+# def changeToSever(feed_name, value):
+#     client.publish(feed_name, value)
+
+
+# client = MQTTClient(AIO_USERNAME, AIO_KEY)
+
+
+
+
+
+
+# 
+# from sever import changeToSever
 
 # import models
 
@@ -32,11 +63,24 @@ def device():
 
 # ADD MY FUNC
 @blueprint.route('/device-change/<d_id>', methods = ['GET', 'POST'])
+# DEVICE CHANGE
 @login_required
 def change(d_id):
     dv_id = json.loads(d_id)
     device_change = Device.query.filter_by(device_id = dv_id).first()
+    
+    print(dv_id)
+        
+    
     device_change.state = 1 if device_change.state == 0 else 0
+    if dv_id == 101:
+        # delay(1)
+        client.send_data("bbc-pump", device_change.state)
+    elif dv_id == 102:
+        client.send_data("bbc-fan", device_change.state)
+    elif dv_id == 103:
+        client.send_data("bbc-led", device_change.state)
+        
     db.session.commit()
     return jsonify(d_id)
 
