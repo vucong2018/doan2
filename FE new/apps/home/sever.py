@@ -1,7 +1,7 @@
 # import serial.tools.list_ports
-from ast import While
+
 from datetime import datetime
-import model
+
 from distutils.command.clean import clean
 import random
 import re
