@@ -22,7 +22,24 @@ const random = (min, max) => {
 var cardChart1, cardChart2,cardChart3, cardChart4, mainChart;
 var getTempData = $.get('/data');
 
-function checkdata(data, tag1, tag2, now_value, min_value, max_value)
+function overLimit(value, limit, description, start = 0) {
+  if (start == 0) {
+    if (value[6] > limit) {
+      setTimeout(() => {
+        alert(description + ' vượt ngưỡng cho phép');
+      }, 500);
+    }
+  }
+  else {
+    if (value[6] > limit && value[5] > limit && value[4] > limit && value[3] <= limit) {
+      setTimeout(() => {
+        alert(description + ' vượt ngưỡng cho phép');
+      }, 500);
+    }
+  }
+}
+
+function addIcon(data, tag1, tag2, now_value, min_value, max_value)
 {
   var percent = Math.round(((now_value - min_value) / (max_value - min_value)) * 100) + "%";
   if (data > 0)
@@ -56,9 +73,15 @@ setInterval(function() {
   })
 }, 3000);
 
+setInterval(() => {
+  overLimit(results.humi_list, 50, 'Độ ẩm không khí');
+  overLimit(results.soil_list, 10, 'Độ ẩm đất');
+  overLimit(results.light_list, 10, 'Cường độ ánh sáng');
+  overLimit(results.temp_list, 10, 'Nhiệt độ môi trường');
+}, 5000)
+
 $('.data_btn').click(function() {
   d_id = $(this)[0].name
-  console.log()
   d_state = ($(this).is(':checked') == true) ? 1 : 0
   dcs = (d_state == 1) ? 'OFF TO ON' : 'ON TO OFF'
   data_log = {device_id: d_id, human: $('#user_name').html(), descript: dcs};
@@ -71,14 +94,18 @@ getTempData.done(function(results){
   var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
   var light_change = Math.round(((results.light_list[6] / results.light_list[5]) - 1.0) * 10000) / 100;
   var temp_change = Math.round(((results.temp_list[6] / results.temp_list[5]) - 1.0) * 10000) / 100;
-  checkdata(humi_change, ".humi_chan", ".humi_bar", results.humi_list[6], 20, 90);
-  checkdata(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
-  checkdata(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
-  checkdata(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
+  addIcon(humi_change, ".humi_chan", ".humi_bar", results.humi_list[6], 20, 90);
+  addIcon(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
+  addIcon(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
+  addIcon(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
   $(".humi_value").text(results.humi_list[6] + "%");
   $(".soil_value").text(results.soil_list[6] + " Pts");
   $(".light_value").text(results.light_list[6] + " Pts");
   $(".temp_value").text(results.temp_list[6]);
+  overLimit(results.humi_list, 50, 'Độ ẩm không khí');
+  overLimit(results.soil_list, 10, 'Độ ẩm đất');
+  overLimit(results.light_list, 10, 'Cường độ ánh sáng');
+  overLimit(results.temp_list, 10, 'Nhiệt độ môi trường');
   // Humi
     type = 'line';
     data_1 = {
@@ -428,10 +455,10 @@ function updateChart() {
     var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
     var light_change = Math.round(((results.light_list[6] / results.light_list[5]) - 1.0) * 10000) / 100;
     var temp_change = Math.round(((results.temp_list[6] / results.temp_list[5]) - 1.0) * 10000) / 100;
-    checkdata(humi_change, ".humi_chan", ".humi_bar", results.humi_list[6], 20, 90);
-    checkdata(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
-    checkdata(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
-    checkdata(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
+    addIcon(humi_change, ".humi_chan", ".humi_bar", results.humi_list[6], 20, 90);
+    addIcon(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
+    addIcon(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
+    addIcon(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
     $(".humi_value").text(results.humi_list[6] + "%");
     $(".soil_value").text(results.soil_list[6] + " Pts");
     $(".light_value").text(results.light_list[6] + " Pts");
