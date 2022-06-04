@@ -539,7 +539,10 @@ function updateChart() {
   
   
 }
-$("#refresh").on('click', updateChart)
+// $("#refresh").on('click', updateChart)
+
+  
+  setInterval(() => {  updateChart(); }, 30000);
 
 
 
