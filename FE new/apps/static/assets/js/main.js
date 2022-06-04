@@ -459,6 +459,10 @@ function updateChart() {
     addIcon(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
     addIcon(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
     addIcon(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
+    overLimit(results.humi_list, 50, 'Độ ẩm không khí');
+    overLimit(results.soil_list, 10, 'Độ ẩm đất');
+    overLimit(results.light_list, 10, 'Cường độ ánh sáng');
+    overLimit(results.temp_list, 10, 'Nhiệt độ môi trường');
     $(".humi_value").text(results.humi_list[6] + "%");
     $(".soil_value").text(results.soil_list[6] + " Pts");
     $(".light_value").text(results.light_list[6] + " Pts");
