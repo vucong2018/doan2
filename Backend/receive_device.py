@@ -10,12 +10,12 @@ import re
 import time
 import  sys
 from sqlalchemy import update
-from  Adafruit_IO import  Client
+from  Adafruit_IO import  MQTTClient
 
 
 AIO_FEED_IDS = ["bbc-pump", "bbc-fan", "bbc-led", "bbc-mode"]
 AIO_USERNAME = "hotrong912"
-AIO_KEY = "aio_coTD17WUnijiug5VUX0hnP5QmrQH"
+AIO_KEY = "aio_YYDV05rnlYYHu5PrzJ5b8UjgIi9d"
 
 
 
@@ -49,7 +49,7 @@ def message(client, feed_id, payload):
         update_device(2, payload)
         
         
-client = Client(AIO_USERNAME, AIO_KEY)
+client = MQTTClient(AIO_USERNAME, AIO_KEY)
 client.on_connect = connected
 client.on_disconnect = disconnected
 client.on_message = message
