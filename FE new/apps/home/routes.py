@@ -6,7 +6,7 @@ from apps.home import blueprint
 from flask import Response, flash, jsonify, render_template, request, session, json
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
-from apps.home.models import Record, ChangeLog, Device, DataLimit
+from apps.home.models import Record, ChangeLog, Device
 # 
 from datetime import datetime
 
@@ -114,39 +114,22 @@ def add_log(data_log):
 @login_required
 def temp_data_chart():
     data = Record.query.all()
-    data_limit = DataLimit.query.all()
     temp_data = [] 
     humi_data = []
     soil_data = []
     light_data = []
     time_data = []
-    limit_data = []
     for i in range (-7,0):
         temp_data += [data[i].getTemp()] 
         humi_data += [data[i].getHumi()]
         soil_data += [data[i].getSoil()]
         light_data += [data[i].getLight()]
         time_data += [data[i].getTime()]
-    for i in range (0,4):
-        limit_data += [data_limit[i].getLimit()]
     return jsonify({'temp_list': temp_data,
                     'humi_list': humi_data,
                     'soil_list': soil_data,
                     'light_list': light_data,
-                    'time_list': time_data,
-                    'limit': limit_data})
-
-@blueprint.route('/limit-change/<string:limit>', methods = ['GET', 'POST'])
-@login_required
-def change_limit(limit):
-    data = json.loads(limit)
-    elem_change = DataLimit.query.filter_by(element = data['element']).first()
-    elem_change.limit_value = data['limit_value']
-    # add_log = ChangeLog(info['device_id'], info['human'], info['descript'], datetime.now())
-    # db.session.add(add_log)
-    db.session.commit()
-    # print()
-    return jsonify(limit)
+                    'time_list': time_data})
 
 @blueprint.route('/<template>')
 @login_required

@@ -69,16 +69,4 @@ class Device(db.Model):
         return self.device_id
     def getState(self):
         return self.state
-
-class DataLimit(db.Model):
-    __tablename__ = 'DataLimit'
-    element = db.Column(db.String(1023), primary_key =  True)
-    limit_value = db.Column(db.Integer)
-    def __init__(self, element, limit_value):
-        self.element = element
-        self.limit_value = limit_value
-    def getElement(self):
-        return self.element
-    def getLimit(self):
-        return self.limit_value
         
