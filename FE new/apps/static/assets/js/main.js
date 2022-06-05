@@ -22,10 +22,10 @@ const random = (min, max) => {
 var cardChart1, cardChart2,cardChart3, cardChart4, mainChart;
 var getTempData = $.get('/data');
 
-function overLimit(value, limit, description, start = 0) {
+function overLimit(value, limit, description) {
   if (value[6] > limit) {
     setTimeout(() => {
-      alert(description + ' vượt ngưỡng cho phép');
+      alert(description + ' exceeded the limit (Limit: ' + limit + ')');
     }, 500);
   }
 }
@@ -75,34 +75,21 @@ $('.data_btn').click(function() {
 
 $('.btn-set_limit').click(function() {
   l_name = $(this)[0].name
-  limit = prompt('Change ' + l_name + ' to:')
-  
-  // switch(l_name)
-  // {
-  //   case 'Humidity':
-  //     console.log('Humidity: ' + limit)
-  //     break
-  //   case 'Moisture':
-  //     console.log('Moisture: ' + limit)
-  //     break
-  //   case 'Light':
-  //     console.log('Light: ' + limit)
-  //     break
-  //   case 'Temperature':
-  //     console.log('Temperature: ' + limit)
-  //     break
-  // }
-  if (limit != null) {
-    send_limit = {element: l_name, limit_value: limit}
-    $.get(`/limit-change/${JSON.stringify(send_limit)}`)
-  }
+  l_index = $(this)[0].value
+  getTempData.done(function(results) {
+    limit = prompt(l_name + '\'s limit: ' + results.limit[l_index] + '\nChange ' + l_name + ' to:')
+    if (limit != null) {
+      send_limit = {element: l_name, limit_value: limit}
+      $.get(`/limit-change/${JSON.stringify(send_limit)}`)
+    }
+  })
 })
 
 getTempData.done(function(results){
-  overLimit(results.humi_list, results.limit[0], 'Độ ẩm không khí', 0);
-  overLimit(results.soil_list, results.limit[1], 'Độ ẩm đất', 0);
-  overLimit(results.light_list, results.limit[2], 'Cường độ ánh sáng', 0);
-  overLimit(results.temp_list, results.limit[3], 'Nhiệt độ môi trường', 0);
+  overLimit(results.humi_list, results.limit[0], 'Humidity');
+  overLimit(results.soil_list, results.limit[1], 'Moisture of soil');
+  overLimit(results.light_list, results.limit[2], 'Light intensity');
+  overLimit(results.temp_list, results.limit[3], 'Temperature');
   var humi_change = Math.round(((results.humi_list[6] / results.humi_list[5]) - 1.0) * 10000) / 100;
   var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
   var light_change = Math.round(((results.light_list[6] / results.light_list[5]) - 1.0) * 10000) / 100;
@@ -464,10 +451,10 @@ function updateChart() {
     addIcon(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
     addIcon(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
     addIcon(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
-    overLimit(results.humi_list, results.limit[0], 'Độ ẩm không khí', 1);
-    overLimit(results.soil_list, results.limit[1], 'Độ ẩm đất', 1);
-    overLimit(results.light_list, results.limit[2], 'Cường độ ánh sáng', 1);
-    overLimit(results.temp_list, results.limit[3], 'Nhiệt độ môi trường', 1);
+    overLimit(results.humi_list, results.limit[0], 'Humidity');
+    overLimit(results.soil_list, results.limit[1], 'Moisture of soil');
+    overLimit(results.light_list, results.limit[2], 'Light intensity');
+    overLimit(results.temp_list, results.limit[3], 'Temperature');
     $(".humi_value").text(results.humi_list[6] + "%");
     $(".soil_value").text(results.soil_list[6] + " Pts");
     $(".light_value").text(results.light_list[6] + " Pts");
