@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import date, datetime
+from datetime import datetime, date
 from select import select
 from turtle import delay
 from apps import db
@@ -8,7 +9,7 @@ from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 from apps.home.models import Record, ChangeLog, Device
 # 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from distutils.command.clean import clean
 import random
@@ -130,7 +131,26 @@ def temp_data_chart():
                     'soil_list': soil_data,
                     'light_list': light_data,
                     'time_list': time_data})
-
+    
+@blueprint.route('/data_month', methods = ['POST','GET'])
+@login_required
+def Data_get_month():
+    # cur_time = datetime.datetime.utcnow()
+    
+    #data_month = Record.query.filter(Record.time < cur_time - datetime.datetime.timedelta(weeks = 4)).all()
+    last_month = date.today() + timedelta(days = - 20)
+    data_month = Record.query.filter(Record.time > last_month ).all()
+    # temp_data += [data[i].getTemp()] 
+    # humi_data += [data[i].getHumi()]
+    # soil_data += [data[i].getSoil()]
+    # light_data += [data[i].getLight()]
+    # time_data += [data[i].getTime()]
+    list_humi = [row.getHumi() for  row in data_month]
+    list_light = [row.getLight() for  row in data_month]
+    list_soil = [row.getSoil() for  row in data_month]
+    list_temp = [row.getTemp() for  row in data_month]
+    list_time = [row.getTime() for  row in data_month]
+    return str(list_humi)
 @blueprint.route('/<template>')
 @login_required
 def route_template(template):
