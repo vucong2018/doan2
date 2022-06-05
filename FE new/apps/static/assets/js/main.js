@@ -23,19 +23,10 @@ var cardChart1, cardChart2,cardChart3, cardChart4, mainChart;
 var getTempData = $.get('/data');
 
 function overLimit(value, limit, description, start = 0) {
-  if (start == 0) {
-    if (value[6] > limit) {
-      setTimeout(() => {
-        alert(description + ' vượt ngưỡng cho phép');
-      }, 500);
-    }
-  }
-  else {
-    if (value[6] > limit && value[5] > limit && value[4] > limit && value[3] <= limit) {
-      setTimeout(() => {
-        alert(description + ' vượt ngưỡng cho phép');
-      }, 500);
-    }
+  if (value[6] > limit) {
+    setTimeout(() => {
+      alert(description + ' vượt ngưỡng cho phép');
+    }, 500);
   }
 }
 
@@ -73,12 +64,12 @@ setInterval(function() {
   })
 }, 3000);
 
-setInterval(() => {
-  overLimit(results.humi_list, 50, 'Độ ẩm không khí');
-  overLimit(results.soil_list, 10, 'Độ ẩm đất');
-  overLimit(results.light_list, 10, 'Cường độ ánh sáng');
-  overLimit(results.temp_list, 10, 'Nhiệt độ môi trường');
-}, 5000)
+// setInterval(() => {
+//   overLimit(results.humi_list, 50, 'Độ ẩm không khí');
+//   overLimit(results.soil_list, 10, 'Độ ẩm đất');
+//   overLimit(results.light_list, 10, 'Cường độ ánh sáng');
+//   overLimit(results.temp_list, 10, 'Nhiệt độ môi trường');
+// }, 5000)
 
 $('.data_btn').click(function() {
   d_id = $(this)[0].name
@@ -90,6 +81,10 @@ $('.data_btn').click(function() {
 })
 
 getTempData.done(function(results){
+  overLimit(results.humi_list, 50, 'Độ ẩm không khí', 0);
+  overLimit(results.soil_list, 10, 'Độ ẩm đất', 0);
+  overLimit(results.light_list, 10, 'Cường độ ánh sáng', 0);
+  overLimit(results.temp_list, 30, 'Nhiệt độ môi trường', 0);
   var humi_change = Math.round(((results.humi_list[6] / results.humi_list[5]) - 1.0) * 10000) / 100;
   var soil_change = Math.round(((results.soil_list[6] / results.soil_list[5]) - 1.0) * 10000) / 100;
   var light_change = Math.round(((results.light_list[6] / results.light_list[5]) - 1.0) * 10000) / 100;
@@ -102,10 +97,6 @@ getTempData.done(function(results){
   $(".soil_value").text(results.soil_list[6] + " Pts");
   $(".light_value").text(results.light_list[6] + " Pts");
   $(".temp_value").text(results.temp_list[6]);
-  overLimit(results.humi_list, 50, 'Độ ẩm không khí');
-  overLimit(results.soil_list, 10, 'Độ ẩm đất');
-  overLimit(results.light_list, 10, 'Cường độ ánh sáng');
-  overLimit(results.temp_list, 10, 'Nhiệt độ môi trường');
   // Humi
     type = 'line';
     data_1 = {
@@ -383,37 +374,33 @@ getTempData.done(function(results){
 
 
     mainChart = new Chart(document.getElementById('main-chart'), {
+    // type: 'line',
     type: 'bar',
     data: {
       labels: results.time_list,
       datasets: [{
-        label: 'My First dataset',
-        backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--cui-info'), 10),
+        label: 'Humidity',
+        backgroundColor: '#0d6efd',
         borderColor: coreui.Utils.getStyle('--cui-info'),
         pointHoverBackgroundColor: '#fff',
         borderWidth: 2,
         data: results.humi_list,
-        fill: true
-      }, {
-        label: 'My Second dataset',
-        borderColor: coreui.Utils.getStyle('--cui-success'),
-        pointHoverBackgroundColor: '#fff',
-        borderWidth: 2,
-        data: results.temp_list
-      }, {
-        label: 'My Third dataset',
+      }, 
+      { 
+        label: 'Temperature',
+        backgroundColor: '#dc3545',
         borderColor: coreui.Utils.getStyle('--cui-danger'),
         pointHoverBackgroundColor: '#fff',
-        borderWidth: 1,
-        borderDash: [8, 5],
-        data: [100, 100, 100, 100, 100, 100, 100]
+        borderWidth: 2,
+        // borderDash: [8, 5],
+        data: results.temp_list
       }]
     },
     options: {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: false
+          display: true
         }
       },
       scales: {
@@ -426,7 +413,7 @@ getTempData.done(function(results){
           ticks: {
             beginAtZero: true,
             maxTicksLimit: 10,
-            stepSize: Math.ceil(1100 / 5),
+            stepSize: 20,
             max: 1023,
             min: 0
           }
@@ -434,10 +421,10 @@ getTempData.done(function(results){
       },
       elements: {
         line: {
-          tension: 0.4
+          tension: 0
         },
         point: {
-          radius: 0,
+          radius: 4,
           hitRadius: 10,
           hoverRadius: 4,
           hoverBorderWidth: 3
@@ -459,10 +446,10 @@ function updateChart() {
     addIcon(soil_change, ".soil_chan", ".soil_bar", results.soil_list[6], 0, 1023);
     addIcon(light_change, ".light_chan", ".light_bar", results.light_list[6], 0, 1023);
     addIcon(temp_change, ".temp_chan", ".temp_bar", results.temp_list[6], 0, 50);
-    overLimit(results.humi_list, 50, 'Độ ẩm không khí');
-    overLimit(results.soil_list, 10, 'Độ ẩm đất');
-    overLimit(results.light_list, 10, 'Cường độ ánh sáng');
-    overLimit(results.temp_list, 10, 'Nhiệt độ môi trường');
+    overLimit(results.humi_list, 50, 'Độ ẩm không khí', 1);
+    overLimit(results.soil_list, 10, 'Độ ẩm đất', 1);
+    overLimit(results.light_list, 10, 'Cường độ ánh sáng', 1);
+    overLimit(results.temp_list, 30, 'Nhiệt độ môi trường', 1);
     $(".humi_value").text(results.humi_list[6] + "%");
     $(".soil_value").text(results.soil_list[6] + " Pts");
     $(".light_value").text(results.light_list[6] + " Pts");
@@ -504,27 +491,22 @@ function updateChart() {
     cardChart3.data.labels = results.time_list
     cardChart4.data.labels = results.time_list
     mainChart.data.labels = results.time_list
-    mainChart.data.datasets =[{
-      label: 'My First dataset',
-      backgroundColor: coreui.Utils.hexToRgba(coreui.Utils.getStyle('--cui-info'), 10),
+    mainChart.data.datasets = [{
+      label: 'Humidity',
+      backgroundColor: '#0d6efd',
       borderColor: coreui.Utils.getStyle('--cui-info'),
       pointHoverBackgroundColor: '#fff',
       borderWidth: 2,
       data: results.humi_list,
-      fill: true
-    }, {
-      label: 'My Second dataset',
-      borderColor: coreui.Utils.getStyle('--cui-success'),
-      pointHoverBackgroundColor: '#fff',
-      borderWidth: 2,
-      data: results.temp_list
-    }, {
-      label: 'My Third dataset',
+    }, 
+    { 
+      label: 'Temperature',
+      backgroundColor: '#dc3545',
       borderColor: coreui.Utils.getStyle('--cui-danger'),
       pointHoverBackgroundColor: '#fff',
-      borderWidth: 1,
-      borderDash: [8, 5],
-      data: [100, 100, 100, 100, 100, 100, 100]
+      borderWidth: 2,
+      // borderDash: [8, 5],
+      data: results.temp_list
     }]
     
     cardChart1.update()
@@ -539,10 +521,9 @@ function updateChart() {
   
   
 }
-// $("#refresh").on('click', updateChart)
+$("#refresh").on('click', updateChart)
 
-  
-  setInterval(() => {  updateChart(); }, 30000);
+setInterval(() => {updateChart()}, 30000)
 
 
 
