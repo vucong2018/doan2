@@ -1,6 +1,6 @@
 from datetime import date, datetime
-from select import select
-from turtle import delay
+# from select import select
+# from turtle import delay
 from apps import db
 from apps.home import blueprint
 from flask import Response, flash, jsonify, render_template, request, session, json
@@ -10,11 +10,11 @@ from apps.home.models import Record, ChangeLog, Device, DataLimit
 # 
 from datetime import datetime, timedelta
 
-from distutils.command.clean import clean
-import random
-import re
-import time
-import  sys
+# from distutils.command.clean import clean
+# import random
+# import re
+# import time
+# import sys
 from  Adafruit_IO import  Client
 
 
@@ -148,25 +148,24 @@ def change_limit(limit):
     # print()
     return jsonify(limit)
 
-@blueprint.route('/data_month', methods = ['POST','GET'])
+@blueprint.route('/report/<int:num_time>', methods = ['POST','GET'])
 @login_required
-def Data_get_month():
+def Data_get_month(num_time):
     # cur_time = datetime.datetime.utcnow()
     
     #data_month = Record.query.filter(Record.time < cur_time - datetime.datetime.timedelta(weeks = 4)).all()
-    last_month = date.today() + timedelta(days = - 20)
+    last_month = date.today() + timedelta(days = - num_time)
     data_month = Record.query.filter(Record.time > last_month ).all()
-    # temp_data += [data[i].getTemp()] 
-    # humi_data += [data[i].getHumi()]
-    # soil_data += [data[i].getSoil()]
-    # light_data += [data[i].getLight()]
-    # time_data += [data[i].getTime()]
     list_humi = [row.getHumi() for  row in data_month]
     list_light = [row.getLight() for  row in data_month]
     list_soil = [row.getSoil() for  row in data_month]
     list_temp = [row.getTemp() for  row in data_month]
     list_time = [row.getTime() for  row in data_month]
-    return str(list_humi)
+    return jsonify({'temp_list': list_temp,
+                    'humi_list': list_humi,
+                    'soil_list': list_soil,
+                    'light_list': list_light,
+                    'time_list': list_time})
 
 @blueprint.route('/<template>')
 @login_required

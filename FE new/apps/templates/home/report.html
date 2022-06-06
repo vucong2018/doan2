@@ -1,0 +1,54 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Log {% endblock %} 
+
+{% block stylesheets %}
+    
+    <link href="/static/assets/vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/@coreui/icons/css/all.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="body flex-grow-1 px-3">
+        <div class="container-lg">
+            <table class="table table-light table-striped data_log">
+                <thead class="table-success">
+                  <tr>
+                    <th scope="col">Num.</th>
+                    <th scope="col">Device Name</th>
+                    <th scope="col">Description of change</th>
+                    <th scope="col">Change by</th>
+                    <th scope="col">Timestamp</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {%for i in range(0, len)%}
+                  <tr>
+                    <td>{{i+1}}</th>
+                    <td>{{record_u[0][i]}}</td>
+                    <td>{{record_u[1][i]}}</td>
+                    <td>{{record_u[2][i]}}</td>
+                    <td>{{record_u[3][i]}}</td>
+                  </tr>
+                  {%endfor%}
+                </tbody>
+              </table>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- Plugins and scripts required by this view-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="/static/assets/vendors/chart.js/js/chart.min.js"></script>
+  <script src="/static/assets/vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
+  <script src="/static/assets/vendors/@coreui/utils/js/coreui-utils.js"></script>
+  <script src="/static/assets/js/main.js"></script>
+  
+
+{% endblock javascripts %} -->
