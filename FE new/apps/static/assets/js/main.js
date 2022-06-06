@@ -85,6 +85,28 @@ $('.btn-set_limit').click(function() {
   })
 })
 
+$('#report-numday').click(function() {
+  $('table > tbody').empty()
+  $('table > tbody').append(`<tr><tr>`)
+  numday = $('#pick-day').val()
+  // console.log(numday)
+  if (numday == 'initial') alert('Please choose an options about number of days!')
+  else $.get(`/report/${numday}`).done(function(results) {
+    for (i = 0; i < results.time_list.length; i++) {
+      $('table > tbody tr:last').after(
+      `<tr>
+        <td>${i+1}</th>
+        <td>${results.humi_list[i]}</td>
+        <td>${results.soil_list[i]}</td>
+        <td>${results.light_list[i]}</td>
+        <td>${results.temp_list[i]}</td>
+        <td>${results.time_list[i]}</td>
+      </tr>`
+      )
+    }
+  })
+})
+
 getTempData.done(function(results){
   overLimit(results.humi_list, results.limit[0], 'Humidity');
   overLimit(results.soil_list, results.limit[1], 'Moisture of soil');

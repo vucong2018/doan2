@@ -3,7 +3,7 @@ from datetime import date, datetime
 # from turtle import delay
 from apps import db, mysql
 from apps.home import blueprint
-from flask import Response, flash, jsonify, render_template, request, session, json
+from flask import Response, flash, jsonify, redirect, render_template, request, session, json, url_for
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 from apps.home.models import Record, ChangeLog, Device, DataLimit
@@ -13,11 +13,12 @@ from flaskext.mysql import MySQL
 import pymysql
 import io
 import csv
-# from distutils.command.clean import clean
-# import random
-# import re
-# import time
-# import sys
+#
+from distutils.command.clean import clean
+import random
+import re
+import time
+import sys
 from  Adafruit_IO import  Client
 
 
@@ -150,6 +151,11 @@ def change_limit(limit):
     db.session.commit()
     # print()
     return jsonify(limit)
+
+@blueprint.route('/report', methods = ['POST','GET'])
+@login_required
+def show_report():
+    return render_template('home/report.html', segment='report', bread_crumb = 'Report')
 
 @blueprint.route('/report/<int:num_time>', methods = ['POST','GET'])
 @login_required
