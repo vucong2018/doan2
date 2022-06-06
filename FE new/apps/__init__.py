@@ -2,11 +2,14 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
+from flaskext.mysql import MySQL
+import pymysql
+
 from sqlalchemy.sql import select
 
 db = SQLAlchemy()
 login_manager = LoginManager()
-
+mysql = MySQL()
 
 def register_extensions(app):
     db.init_app(app)
@@ -32,6 +35,14 @@ def configure_database(app):
 
 def create_app(config):
     app = Flask(__name__)
+    
+ 
+    # MySQL configurations
+    app.config['MYSQL_DATABASE_USER'] = 'root'
+    app.config['MYSQL_DATABASE_PASSWORD'] = ''
+    app.config['MYSQL_DATABASE_DB'] = 'tcba'
+    app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+    mysql.init_app(app)
     app.config.from_object(config)
     register_extensions(app)
     register_blueprints(app)

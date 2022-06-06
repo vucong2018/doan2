@@ -1,7 +1,7 @@
 from datetime import date, datetime
 # from select import select
 # from turtle import delay
-from apps import db
+from apps import db, mysql
 from apps.home import blueprint
 from flask import Response, flash, jsonify, render_template, request, session, json
 from flask_login import current_user, login_required
@@ -9,7 +9,10 @@ from jinja2 import TemplateNotFound
 from apps.home.models import Record, ChangeLog, Device, DataLimit
 # 
 from datetime import datetime, timedelta
-
+from flaskext.mysql import MySQL
+import pymysql
+import io
+import csv
 # from distutils.command.clean import clean
 # import random
 # import re
@@ -166,6 +169,34 @@ def Data_get_month(num_time):
                     'soil_list': list_soil,
                     'light_list': list_light,
                     'time_list': list_time})
+
+@blueprint.route('/download/report/csv', methods = ['POST','GET'])
+@login_required
+def DownLoadCSV():
+    conn = None
+    cursor = None
+
+    try:
+        conn = mysql.connect()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+    
+        cursor.execute("SELECT * FROM record WHERE DATEDIFF(CURDATE(), time) < 30")
+        result = cursor.fetchall()
+        output = io.StringIO()
+        writer = csv.writer(output)
+        line = ['Id, Temp, Humi, Light, Soil, Time']
+        writer.writerow(line)
+        for row in result:
+            line = [str(row['record_id']) + ',' + str(row['temp']) + ',' + str(row['humi']) + ',' + str(row['light'])+ ',' + str(row['soil'])+ ',' + str(row['time'])]
+            writer.writerow(line)
+        output.seek(0)
+        return Response(output, mimetype="text/csv", headers ={"Content-Disposition":"attachment;filename=employee_report.csv"})
+    except Exception as e:
+        print(e)
+        return "Error" + e
+    finally:
+        cursor.close() 
+        conn.close()
 
 @blueprint.route('/<template>')
 @login_required
