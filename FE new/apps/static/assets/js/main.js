@@ -107,6 +107,13 @@ $('#report-numday').click(function() {
   })
 })
 
+$('#report-print').click(function() {
+  numday = $('#pick-day').val()
+  if (numday != 'initial') {
+    window.location.href = `/download/report/csv/${numday}` 
+  }
+})
+
 getTempData.done(function(results){
   overLimit(results.humi_list, results.limit[0], 'Humidity');
   overLimit(results.soil_list, results.limit[1], 'Moisture of soil');

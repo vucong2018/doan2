@@ -1,9 +1,12 @@
 from datetime import date, datetime
+from distutils.command.config import config
+from fileinput import filename
+from urllib import response
 # from select import select
 # from turtle import delay
 from apps import db, mysql
 from apps.home import blueprint
-from flask import Response, flash, jsonify, redirect, render_template, request, session, json, url_for
+from flask import Response, flash, jsonify, make_response, redirect, render_template, request, session, json, url_for
 from flask_login import current_user, login_required
 from jinja2 import TemplateNotFound
 from apps.home.models import Record, ChangeLog, Device, DataLimit
@@ -13,6 +16,7 @@ from flaskext.mysql import MySQL
 import pymysql
 import io
 import csv
+import pdfkit
 #
 from distutils.command.clean import clean
 import random
@@ -176,9 +180,24 @@ def Data_get_month(num_time):
                     'light_list': list_light,
                     'time_list': list_time})
 
-@blueprint.route('/download/report/csv', methods = ['POST','GET'])
+# @blueprint.route('/report/print/<int:num_time>', methods = ['POST','GET'])
+# @login_required
+# def print_pdf(num_time):
+#     data = Data_get_month(num_time).json
+#     rendered = render_template('home/report_print.html', len = len(data['humi_list']), record = data)
+#     path_l = b'D:\\do_not_open\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
+#     config = pdfkit.configuration(wkhtmltopdf= path_l)
+#     pdf = pdfkit.from_string(rendered, 'Mypdf.pdf', configuration=config)
+
+#     res = make_response(pdf)
+#     res.headers['Content-Type'] = 'application/pdf'
+#     res.headers['Content-Disposition'] = 'inline'
+
+#     return rendered
+
+@blueprint.route('/download/report/csv/<int:num_time>', methods = ['POST','GET'])
 @login_required
-def DownLoadCSV():
+def DownLoadCSV(num_time):
     conn = None
     cursor = None
 
@@ -186,7 +205,9 @@ def DownLoadCSV():
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
     
-        cursor.execute("SELECT * FROM record WHERE DATEDIFF(CURDATE(), time) < 30")
+        if num_time == 30: cursor.execute("SELECT * FROM record WHERE DATEDIFF(CURDATE(), time) < 30")
+        if num_time == 60: cursor.execute("SELECT * FROM record WHERE DATEDIFF(CURDATE(), time) < 60")
+        if num_time == 90: cursor.execute("SELECT * FROM record WHERE DATEDIFF(CURDATE(), time) < 90")
         result = cursor.fetchall()
         output = io.StringIO()
         writer = csv.writer(output)
