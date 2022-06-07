@@ -117,6 +117,15 @@ def add_log(data_log):
     # print()
     return jsonify(data_log)
 
+@blueprint.route('/limit/<string:data_log_limit>', methods = ['GET', 'POST'])
+@login_required
+def add_log_limit(data_log_limit):
+    info = json.loads(data_log_limit)
+    add_log = ChangeLog(info['device_id'], info['human'], info['descript'], datetime.now())
+    db.session.add(add_log)
+    db.session.commit()
+    # print()
+    return jsonify(data_log_limit)
 
 @blueprint.route('/data', methods = ['POST','GET'])
 @login_required

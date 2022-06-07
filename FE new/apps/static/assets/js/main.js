@@ -81,6 +81,9 @@ $('.btn-set_limit').click(function() {
     if (limit != null) {
       send_limit = {element: l_name, limit_value: limit}
       $.get(`/limit-change/${JSON.stringify(send_limit)}`)
+      dcs = l_name + '\'s limit changed to ' + limit
+      log = {device_id: 0, descript: dcs, human: $('#user_name').html()}
+      $.get(`/limit/${JSON.stringify(log)}`)
     }
   })
 })
