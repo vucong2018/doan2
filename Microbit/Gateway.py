@@ -1,7 +1,3 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 import serial.tools.list_ports
 import random
@@ -15,10 +11,11 @@ AIO_FEED_ID = {"bbc-pump", "bbc-fan", "bbc-led", "bbc-mode"}
 # AIO_KEY = "aio_oXwW17pj9GUjy3rCioqNINAIfG1K"
 
 AIO_USERNAME_1 = "trongho912"
-AIO_KEY_1 = "aio_oXwW17pj9GUjy3rCioqNINAIfG1K"
+AIO_KEY_1 = "aio_fRTi73AmTn6IW6Wv275vdCiRUzfn"
 
 AIO_USERNAME_2 = "hotrong912"
-AIO_KEY_2 = "aio_JzNU604DzalToD2urJOCDDkhg5LO"
+AIO_KEY_2 = "aio_ywrc83AY1VKkvstJvW2DG4kj4zIk"
+
 
 def connected(client):
     print("Ket noi thanh cong...")
@@ -49,6 +46,7 @@ def message(client, feed_id, payload):
 # client.connect()
 # client.loop_background()
 
+
 client1 = MQTTClient(AIO_USERNAME_1, AIO_KEY_1)
 client2 = MQTTClient(AIO_USERNAME_2, AIO_KEY_2)
 
@@ -66,6 +64,7 @@ client2.on_subscribe = subscribe
 client2.connect()
 client2.loop_background()
 
+
 def getPort():
     ports = serial.tools.list_ports.comports()
     N = len(ports)
@@ -80,11 +79,15 @@ def getPort():
 
 
 isMicrobitConnected = False
-if getPort() != "None":
+if getPort() == "None":  #hardcode for emulator
+    ser = serial.Serial(port='COM4', baudrate=115200)
+    isMicrobitConnected = True
+elif getPort() != "None": #for real devices
     ser = serial.Serial(port=getPort(), baudrate=115200)
     isMicrobitConnected = True
 
 mess = ""
+
 
 
 def processData(data):
@@ -132,13 +135,5 @@ while True:
     if isMicrobitConnected:
         readSerial()
     time.sleep(1)
-    # value_humid = random.randint(0, 90)
-    # value_temp = random.randint(0, 50)
-    # value_light = random.randint(0, 1023)
-    # value_soil = random.randint(0, 1023)
-    # client.publish("bbc-dht11-humid", value_humid)
-    # client.publish("bbc-dht11-temp", value_temp)
-    # client.publish("bbc-light", value_light)
-    # client.publish("bbc-soil", value_soil)
-    # time.sleep(15)
+
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

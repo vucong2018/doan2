@@ -8,47 +8,30 @@ function DHT11 () {
     true
     )
     humid_var = dht11_dht22.readData(dataType.humidity)
-    temp_var = dht11_dht22.readData(dataType.temperature)
+    temp_var = Math.round(dht11_dht22.readData(dataType.temperature))
     NPNLCD.ShowString("Temp: " + ("" + temp_var), 0, 0)
+    NPNLCD.ShowString("Humid: " + ("" + humid_var), 0, 1)
     // NPNLCD.ShowString("Humid: " + ("" + humid_var), 0, 1)
     serial.writeString("!TEMP:" + ("" + temp_var) + "#")
     // NPNLCD.ShowString("Humid: " + ("" + humid_var), 0, 1)
     serial.writeString("!HUMID:" + ("" + humid_var) + "#")
 }
 function LED_control () {
-    if (mode == 0) {
-        if (LED_manual == 1) {
-            pins.digitalWritePin(DigitalPin.P4, 1)
-            NPNLCD.ShowString("Turn on LED", 0, 1)
-            serial.writeString("!LED:" + "1" + "#")
-        } else {
-            pins.digitalWritePin(DigitalPin.P4, 0)
-            NPNLCD.ShowString("Turn off LED", 0, 1)
-            serial.writeString("!LED:" + "0" + "#")
-        }
+    if (LED_manual == 1) {
+        pins.digitalWritePin(DigitalPin.P4, 1)
+        NPNLCD.ShowString("Turn on LED", 0, 1)
+        serial.writeString("!LED:" + "1" + "#")
     } else {
-        if (light_var > 300) {
-            pins.digitalWritePin(DigitalPin.P4, 0)
-            NPNLCD.ShowString("Turn off LED", 0, 1)
-            serial.writeString("!LED:" + "0" + "#")
-        } else {
-            pins.digitalWritePin(DigitalPin.P4, 1)
-            NPNLCD.ShowString("Turn on LED", 0, 1)
-            serial.writeString("!LED:" + "1" + "#")
-        }
+        pins.digitalWritePin(DigitalPin.P4, 0)
+        NPNLCD.ShowString("Turn off LED", 0, 1)
+        serial.writeString("!LED:" + "0" + "#")
     }
 }
 serial.onDataReceived(serial.delimiters(Delimiters.Hash), function () {
     receivedMsg = serial.readUntil(serial.delimiters(Delimiters.Hash))
     receivedMsg = "" + receivedMsg.slice(1)
     splitData = receivedMsg.split(":")
-    if (splitData[0] == "bbc-mode") {
-        if (splitData[1] == "1") {
-            mode = 1
-        } else {
-            mode = 0
-        }
-    } else if (splitData[0] == "bbc-led") {
+    if (splitData[0] == "bbc-led") {
         if (splitData[1] == "1") {
             LED_manual = 1
         } else {
@@ -71,66 +54,29 @@ serial.onDataReceived(serial.delimiters(Delimiters.Hash), function () {
             fan_manual = 0
         }
         Fan_control()
-    } else {
-    	
     }
 })
 function Pump_control () {
-    if (mode == 0) {
-        if (pump_manual == 1) {
-            NPNBitKit.Relay(DigitalPin.P2, true)
-            NPNLCD.ShowString("Turn on pump", 0, 1)
-            serial.writeString("!PUMP:" + "1" + "#")
-        } else {
-            NPNBitKit.Relay(DigitalPin.P2, false)
-            NPNLCD.ShowString("Turn off pump", 0, 1)
-            serial.writeString("!PUMP:" + "0" + "#")
-        }
+    if (pump_manual == 1) {
+        NPNBitKit.Relay(DigitalPin.P2, true)
+        NPNLCD.ShowString("Turn on pump", 0, 1)
+        serial.writeString("!PUMP:" + "1" + "#")
     } else {
-        if (NPNBitKit.AnalogSoilMosture(AnalogPin.P3) < 30) {
-            NPNBitKit.Relay(DigitalPin.P2, true)
-            NPNLCD.ShowString("Turn on pump", 0, 1)
-            serial.writeString("!PUMP:" + "1" + "#")
-        } else {
-            NPNBitKit.Relay(DigitalPin.P2, false)
-            NPNLCD.ShowString("Turn off pump", 0, 1)
-            serial.writeString("!PUMP:" + "0" + "#")
-        }
+        NPNBitKit.Relay(DigitalPin.P2, false)
+        NPNLCD.ShowString("Turn off pump", 0, 1)
+        serial.writeString("!PUMP:" + "0" + "#")
     }
 }
 function Fan_control () {
-    if (mode == 0) {
-        if (fan_manual == 2) {
-            pins.digitalWritePin(DigitalPin.P8, 0)
-            pins.analogWritePin(AnalogPin.P9, 500)
-            NPNLCD.ShowString("Fan: ON lv 2", 0, 1)
-            serial.writeString("!FAN:" + "2" + "#")
-        } else if (fan_manual == 1) {
-            pins.digitalWritePin(DigitalPin.P8, 0)
-            pins.analogWritePin(AnalogPin.P9, 300)
-            NPNLCD.ShowString("Fan: ON lv 1", 0, 1)
-            serial.writeString("!FAN:" + "1" + "#")
-        } else {
-            pins.analogWritePin(AnalogPin.P9, 0)
-            NPNLCD.ShowString("Fan: OFF", 0, 1)
-            serial.writeString("!FAN:" + "0" + "#")
-        }
-    } else {
-        if (temp_var > 35) {
-            pins.digitalWritePin(DigitalPin.P8, 1)
-            pins.analogWritePin(AnalogPin.P9, 500)
-            NPNLCD.ShowString("Fan: ON lv 2", 0, 1)
-            serial.writeString("!FAN:" + "2" + "#")
-        } else if (temp_var > 20) {
-            pins.digitalWritePin(DigitalPin.P8, 1)
-            pins.analogWritePin(AnalogPin.P9, 300)
-            NPNLCD.ShowString("Fan: ON lv 1", 0, 1)
-            serial.writeString("!FAN:" + "1" + "#")
-        } else {
-            pins.analogWritePin(AnalogPin.P9, 1)
-            NPNLCD.ShowString("Fan: OFF", 0, 1)
-            serial.writeString("!FAN:" + "0" + "#")
-        }
+    if (fan_manual == 1) {
+        pins.digitalWritePin(DigitalPin.P8, 1)
+        pins.analogWritePin(AnalogPin.P9, 300)
+        NPNLCD.ShowString("Fan: ON", 0, 1)
+        serial.writeString("!FAN:" + "1" + "#")
+    } else if (fan_manual == 1) {
+        pins.analogWritePin(AnalogPin.P9, 0)
+        NPNLCD.ShowString("Fan: OFF", 0, 1)
+        serial.writeString("!FAN:" + "0" + "#")
     }
 }
 function Auto_light () {
@@ -147,18 +93,17 @@ function Moisture_sensor () {
 }
 let clk_count = 0
 let soil_var = 0
+let light_var = 0
 let fan_manual = 0
 let pump_manual = 0
 let splitData: string[] = []
-let light_var = 0
 let LED_manual = 0
 let temp_var = 0
 let humid_var = 0
-let mode = 0
 let receivedMsg = ""
 NPNLCD.LcdInit()
 led.enable(false)
-mode = 1
+let mode = 1
 basic.forever(function () {
     clk_count = (clk_count + 1) % 3
     if (clk_count == 0) {
@@ -166,7 +111,7 @@ basic.forever(function () {
         Fan_control()
     }
     if (clk_count == 1) {
-        Auto_light()
+        // Auto_light()
         LED_control()
     }
     if (clk_count == 2) {
