@@ -29,7 +29,7 @@ from  Adafruit_IO import  Client
 
 AIO_FEED_IDS = ["bbc-pump", "bbc-fan", "bbc-led", "bbc-mode"]
 AIO_USERNAME = "hotrong912"
-AIO_KEY = "aio_YYDV05rnlYYHu5PrzJ5b8UjgIi9d"
+AIO_KEY = "aio_ywrc83AY1VKkvstJvW2DG4kj4zIk"
 client = Client(AIO_USERNAME, AIO_KEY)
 
 # def changeToSever(feed_name, value):

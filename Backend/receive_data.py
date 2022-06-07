@@ -12,7 +12,7 @@ from  Adafruit_IO import  MQTTClient
 
 AIO_FEED_IDS = ["bbc-dht11-humid", "bbc-dht11-temp", "bbc-light", "bbc-soil", "fan", "led", "rainulator"]
 AIO_USERNAME = "trongho912"
-AIO_KEY = "aio_WZMs00wognlvRj63rkERch5eLMUa"
+AIO_KEY = "aio_fRTi73AmTn6IW6Wv275vdCiRUzfn"
 
 
 
